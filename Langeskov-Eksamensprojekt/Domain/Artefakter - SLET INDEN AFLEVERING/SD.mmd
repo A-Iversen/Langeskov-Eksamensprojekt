@@ -1,0 +1,46 @@
+sequenceDiagram
+    participant Medlem
+    participant View
+    participant ViewModel
+    participant Repository
+    participant Database
+
+    Medlem->>View: indtastTilmelding(navn, køn, fødselsdato, ...)
+    
+    Note over View: Data Binding/Event
+    View->>ViewModel: behandleTilmelding(data)
+
+    %% Validering og Dublet-tjek
+    ViewModel->>ViewModel: validerData(data)
+    
+    alt Valideringsfejl
+        ViewModel-->>View: visFejl(fejlbesked)
+        View-->>Medlem: afvisTilmelding(fejlbesked)
+    end
+    
+    ViewModel->>Repository: findMedlem(navn, fødselsdato)
+    Repository->>Database: SELECT
+    Database-->>Repository: [Medlem|null]
+    Repository-->>ViewModel: [Medlem|null]
+
+    alt Medlem findes allerede
+        ViewModel-->>View: visGenaktiveringsMulighed()
+        View-->>Medlem: visGenaktiveringsMulighed()
+    end
+
+    %% Succesforløb
+    
+    Note over ViewModel,Database: Oprettelse og gruppering
+    
+    ViewModel->>ViewModel: tildelUniktMedlemsID()
+    ViewModel->>ViewModel: beregnBetalingsGruppe(fødselsdato, køn)
+
+    ViewModel->>Repository: opretMedlem(nytMedlem)
+    Repository->>Database: INSERT
+    Database-->>Repository: OK
+    
+    Note over ViewModel: Forretningslogik
+    ViewModel->>ViewModel: genererBekræftelseOgMail() 
+
+    ViewModel-->>View: returnerMedlemsID(nytID)
+    View-->>Medlem: visTilmeldingBekræftelse(nytID)

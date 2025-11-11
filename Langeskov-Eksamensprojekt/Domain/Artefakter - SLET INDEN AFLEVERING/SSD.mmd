@@ -1,0 +1,19 @@
+sequenceDiagram
+    participant Medlem
+    participant System
+
+    activate Medlem
+    Medlem->>System:indtastTilmelding(navn, køn, fødselsdato, adresse, postnr, tlf nr, email, medlemsGruppe)
+    
+    alt Valideringsfejl
+        System-->>Medlem: afvisTilmelding(fejlbesked)
+    end
+    
+    alt Medlem findes allerede
+        System-->>Medlem: visGenaktiveringsMulighed()
+    end
+
+    System->>System: tildelMedlemsID()
+    System->>System: sætTilskudsGruppe(fødselsdato, køn)
+    System-->>Medlem: visTilmeldingBekræftelse(medlemsID)
+    deactivate Medlem
