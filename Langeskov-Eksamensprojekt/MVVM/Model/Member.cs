@@ -16,16 +16,17 @@ namespace MVVM.Model
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string DateOfBirth { get; set; }
-    }
 
-    public Member(int memberID, string gender, string name, string address, string postalCode, string phoneNumber, string email, string dateOfBirth)
-    {
-        _memberID = memberID;
-        _gender = gender;
-        _name = name;
-        _address = address;
-        _postalCode = postalCode;
-        _phoneNumber = phoneNumber;
-        _email = email;
-        _dateOfBirth = dateOfBirth;
+        public Member(int memberID, string gender, string name, string address, string postalCode, string phoneNumber, string email, string dateOfBirth)
+        {
+            MemberID = memberID;
+            Gender = gender;
+            Name = name;
+            Address = address;
+            PostalCode = postalCode;
+            PhoneNumber = phoneNumber;
+            Email = email;
+            DateOfBirth = dateOfBirth;
+        }
     }
+}

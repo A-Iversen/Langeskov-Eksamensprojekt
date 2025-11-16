@@ -2,15 +2,15 @@
 
 public class MemberGroup
 {
-    public enum MemberGroupName { get; set; }
+    public enum MemberGroupName
+    {
+        Family,
+        Single,
+        FamilyFree,
+        SingleFree
+    }
 }
 
-public enum
-{
-    Family,
-    Single,
-    FamilyFree,
-    SingleFree
-}
 
-public MemberGroup() { }
+
+

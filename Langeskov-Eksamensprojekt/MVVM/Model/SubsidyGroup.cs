@@ -6,4 +6,3 @@ public class SubsidyGroup
     public string SubsidyGroupName { get; set; }
 }
 
-public SubsidyGroup(){}

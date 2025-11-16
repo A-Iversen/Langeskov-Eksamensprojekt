@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+    <!--____________Light Mode_______________________________________--> 
+    
+    <SolidColorBrush x:Key="bgDark" Color="#FFE1E5E7"/>
+    <SolidColorBrush x:Key="bg" Color="#FFEEF3F4"/>
+    <SolidColorBrush x:Key="bgLight" Color="#FFFCFFFF"/>
+    
+    <SolidColorBrush x:Key="text" Color="#FF070C0E"/>
+    <SolidColorBrush x:Key="textMuted" Color="#FF42494B"/>
+    
+    <SolidColorBrush x:Key="highlight" Color="#FFF8FFFF"/>
+    <SolidColorBrush x:Key="border" Color="#FF7A8284"/>
+    <SolidColorBrush x:Key="borderMuted" Color="#FF98A0A3"/>
+
+    <!--alerts-->
+    <SolidColorBrush x:Key="danger" Color="#FFCB2F32"/>
+    <SolidColorBrush x:Key="warning" Color="#FFF0C53F"/>
+    <SolidColorBrush x:Key="success" Color="#FF22BB33"/>
+    <SolidColorBrush x:Key="info" Color="#FF0078D7"/>
+
+    
+
+
+    <!--Potentiel Senere Implementering-->
+    <!--____________Dark Mode_______________________________________-->
+    <SolidColorBrush x:Key="bgDarkPlaceholder" Color="#FF020404"/>
+    <SolidColorBrush x:Key="bgPlaceholder" Color="#FF090C0D"/>
+    <SolidColorBrush x:Key="bgLightPlaceholder" Color="#FF141718"/>
+
+    <SolidColorBrush x:Key="textPlaceholder" Color="#FFEBF4F6"/>
+    <SolidColorBrush x:Key="textMutedPlaceholder" Color="#FFAAB3B5"/>
+
+    <SolidColorBrush x:Key="highlightPlaceholder" Color="#FF5D6567"/>
+    <SolidColorBrush x:Key="borderPlaceholder" Color="#FF42494B"/>
+    <SolidColorBrush x:Key="borderMutedPlaceholder" Color="#FF282F31"/>
+    
+</ResourceDictionary>
