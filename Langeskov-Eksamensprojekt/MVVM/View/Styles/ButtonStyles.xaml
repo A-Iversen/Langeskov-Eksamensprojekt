@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
    
     <Style x:Key="menuButton" TargetType="RadioButton">
-        <Setter Property="Height" Value="160"/>
+        <Setter Property="Height" Value="140"/>
         <Setter Property="Width" Value="100"/>
-        <Setter Property="Margin" Value="50,0,0,0"/>
+        <Setter Property="Margin" Value="50,0,0,5"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
@@ -12,7 +12,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
-                    <Border Background="{TemplateBinding Background}" 
+                    <Border Background="{TemplateBinding Background}" CornerRadius="0,0,2,2" 
                             BorderThickness="0,0,0,4" BorderBrush="{TemplateBinding BorderBrush}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
@@ -22,12 +22,14 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Margin" Value="50,0,0,-1.5"/>
+                <Setter Property="Height" Value="150"/>
+                <Setter Property="Margin" Value="50,0,0,-3"/>
                 <Setter Property="BorderBrush" Value="{StaticResource info}"/>
                 <Setter Property="Background" Value="{StaticResource bgDark}"/>
             </Trigger>
 
             <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Height" Value="150"/>
                 <Setter Property="Margin" Value="50,0,0,0"/>
                 <Setter Property="BorderBrush" Value="{StaticResource companyPrimary}"/>
                 <Setter Property="Background" Value="{StaticResource bgDark}"/>
@@ -48,7 +50,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="3">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
@@ -57,6 +59,8 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Height" Value="35"/>
+                
                 <Setter Property="Background" Value="{StaticResource bgDark}"/>
                 <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
             </Trigger>

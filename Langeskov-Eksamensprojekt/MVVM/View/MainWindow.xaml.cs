@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MVVM.ViewModel;
+using MVVM.View.UserControls;
 
 namespace MVVM.View
 {
@@ -18,7 +19,6 @@ namespace MVVM.View
         {
             InitializeComponent();
             DataContext = new MainViewModel();
-
 
         }
 

@@ -31,7 +31,7 @@
             <!--ControlBar-->
             <Border Background="{StaticResource companyPrimary}"
                     Grid.Column="1" Grid.ColumnSpan="2"
-                    CornerRadius="0,10,10,60" 
+                    CornerRadius="0,10,10,30" 
                     MouseLeftButtonDown="StackPanel_MouseLeftButtonDown">
                                 <Border.Effect>
                     <DropShadowEffect Direction="-90" Opacity="0.25" 
@@ -78,6 +78,7 @@
                     </DropShadowEffect>
                 </Border.Effect>            
             </Border>
+            <Border Background="{StaticResource bgLight}" CornerRadius="20,0,40,0" Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="-1"/>            
             
             
             <!--Left Panel-->
@@ -92,15 +93,23 @@
             </Border>
 
             
-
-                <Border Background="{StaticResource bgLight}" CornerRadius="20,0,40,0" Grid.RowSpan="3" Grid.ColumnSpan="2" Panel.ZIndex="-1"/>
-
             <!--Company Logo-->
-            <Border Background="{StaticResource companyPrimary}" CornerRadius="20,0,30,10" 
+            <Border Background="{StaticResource companyPrimary}" CornerRadius="20,0,39,10" 
                     Grid.RowSpan="2" Grid.ColumnSpan="2"
                     HorizontalAlignment="Left"
-                    Margin="-5,0,0,5" Width="100">
+                    Margin="-5,0,0,2" Width="100">
+                
+                <Border.Effect>
+                    <DropShadowEffect Direction="-59" Opacity="0.1" 
+                                      BlurRadius="5" ShadowDepth="4">
+                    </DropShadowEffect>
+                </Border.Effect>
 
+                <Viewbox Width="60" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                         Margin="5,5,10,10">
+                    <Path Style="{StaticResource CompanyLogo}" Stretch="Uniform"
+                          Fill="White"/>                    
+                </Viewbox>
             </Border>
 
             <!--Navigation Panel-->
@@ -121,8 +130,8 @@
                     <RadioButton Style="{StaticResource menuButton}"  Tag="{StaticResource IconUsers}"
                                  Command="{Binding ShowAccountingViewCommand}">
 
-                        <Viewbox Width="50" Height="100" VerticalAlignment="Bottom">
-                            <Path Style="{StaticResource IconPrinters}" Fill="{StaticResource text}"/>
+                        <Viewbox Width="60" Height="110" VerticalAlignment="Bottom">
+                            <Path Style="{StaticResource IconAccounting}" Fill="{StaticResource text}"/>
                         </Viewbox>
                     
                     </RadioButton>
