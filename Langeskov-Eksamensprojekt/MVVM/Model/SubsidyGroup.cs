@@ -2,8 +2,14 @@
 
 public class SubsidyGroup
 {
-    public int GroupID { get; set; }
-    public string SubsidyGroupName { get; set; }
+    public enum SubsidyGroupName { get; set; }
 }
 
-public SubsidyGroup(){}
+public enum
+{
+    LowIncome,
+    MiddleIncome,
+    HighIncome
+}
+
+public SubsidyGroup() { }
