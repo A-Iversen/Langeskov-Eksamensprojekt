@@ -2,14 +2,12 @@
 
 public class SubsidyGroup
 {
-    public enum SubsidyGroupName { get; set; }
+    public enum SubsidyGroupName
+    {
+        LowIncome,
+        MiddleIncome,
+        HighIncome
+    }
+
 }
 
-public enum
-{
-    LowIncome,
-    MiddleIncome,
-    HighIncome
-}
-
-public SubsidyGroup() { }

@@ -9,6 +9,7 @@ public class MemberGroup
         FamilyFree,
         SingleFree
     }
+
 }
 
 
