@@ -9,24 +9,38 @@ namespace MVVM.Model
     public class Member
     {
         public int MemberID { get; set; }
-        public string Gender { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
         public string Address { get; set; }
         public string PostalCode { get; set; }
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string DateOfBirth { get; set; }
+        public string Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
-        public Member(int memberID, string gender, string name, string address, string postalCode, string phoneNumber, string email, string dateOfBirth)
+        // FK fra SubsidyGroup
+        public int SubsidyGroupID { get; private set; }
+
+        // FK fra MemberGroup
+        public string MemberGroupName { get; private set; }
+
+        public Member() { }
+
+        public Member(string name, string email, string address, string postalCode, string phoneNumber, string gender, DateTime dateOfBirth, string memberGroupName)
         {
-            MemberID = memberID;
-            Gender = gender;
             Name = name;
+            Email = email;
             Address = address;
             PostalCode = postalCode;
             PhoneNumber = phoneNumber;
-            Email = email;
+            Gender = gender;
             DateOfBirth = dateOfBirth;
+            MemberGroupName = memberGroupName;
+        }
+
+        // bruges af ViewModel
+        public void SetSubsidyGroup(int groupID)
+        {
+            SubsidyGroupID = groupID;
         }
     }
 }
