@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 
-namespace MVVM.Model
+namespace Infrastructure.Model
 {
     public class SubsidyGroup
     {
         public int SubsidyGroupID { get; set; }
-        public string SubsidyGroupNameText { get; set; }
-        public string AgeRange { get; set; }
+        public string SubsidyGroupNameText { get; set; } = string.Empty;
+        public string AgeRange { get; set; } = string.Empty;
 
         public enum SubsidyGroupName
         {

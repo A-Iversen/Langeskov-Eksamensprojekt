@@ -1,12 +1,11 @@
-﻿using System;
-
-namespace MVVM.Infrastructure.Repository
+﻿
+namespace Infrastructure.Repository
 {
     public interface IRepository<T> where T : class
     {
         // CRUD: Read
         IEnumerable<T> GetAll();
-        T GetById(int id);
+        T? GetById(int id);
 
         // CRUD: Create (Returnerer den oprettede entitet med tildelt ID fra DB)
         T Add(T entity);
