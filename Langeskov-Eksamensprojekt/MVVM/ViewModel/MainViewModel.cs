@@ -13,8 +13,6 @@ namespace MVVM.ViewModel
     {
 		public string View { get; set; }
 
-
-
         private object _currentView = new MemberControl();
 
 		public object CurrentView

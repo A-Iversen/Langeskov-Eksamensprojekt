@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36616.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM", "MVVM.csproj", "{D68A4CA6-9230-4B64-8C61-C87E392A31ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Domain\Infrastructure.csproj", "{6C61962E-1C5A-4C22-A126-CDD6FD32875B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{6C61962E-1C5A-4C22-A126-CDD6FD32875B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
