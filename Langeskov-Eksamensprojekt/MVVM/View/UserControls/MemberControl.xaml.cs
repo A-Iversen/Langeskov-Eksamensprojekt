@@ -16,9 +16,6 @@ using MVVM.ViewModel;
 
 namespace MVVM.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for MemberControl.xaml
-    /// </summary>
     public partial class MemberControl : UserControl
     {
         public MemberControl()

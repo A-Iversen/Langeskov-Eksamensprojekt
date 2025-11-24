@@ -1,24 +1,19 @@
-<<<<<<< Updated upstream
 ﻿using Infrastructure.Model;
 using Infrastructure.Repository;
 using System;
 using System.Linq;
 using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
-=======
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MVVM.Model;
->>>>>>> Stashed changes
 
 namespace MVVM.ViewModel
 {
     public class MemberViewModel
     {
-<<<<<<< Updated upstream
         private readonly IMemberRepository _repository;
 
         // Den valgte medlemskabstype fra UI - bruger nu integer ID i stedet for string navn
@@ -95,7 +90,7 @@ namespace MVVM.ViewModel
 
             return createdMember;
         }
-=======
+
         private ObservableCollection<Member> _members { get; set; } = new ObservableCollection<Member>();
         public ObservableCollection<Member> Members
         {
@@ -103,41 +98,6 @@ namespace MVVM.ViewModel
             set { _members = value; }
         }
 
-        public MemberViewModel()
-        {
-            _members.Add(new Member(1, "Male", "John Doe", "Street 1", "12345", "555-1111", "john@mail.com", "1990-01-01"));
-            _members.Add(new Member(2, "Female", "Anna Smith", "Street 2", "23456", "555-2222", "anna@mail.com", "1992-04-12"));
-            _members.Add(new Member(4, "Male", "Bob Johnson", "Street 6", "15215", "555-3333", "bob@mail.com", "1985-09-09"));
-            _members.Add(new Member(5, "Male", "Kenny Dickson", "Street 12", "69431", "555-4444", "kenny@mail.com", "1996-05-06"));
-            _members.Add(new Member(6, "Female", "Emily Charlson", "Street 6", "78651", "555-5555", "emily@mail.com", "1990-03-08"));
-            _members.Add(new Member(7, "Female", "Jenny Erikson", "Street 13", "13584", "555-6666", "jenny@mail.com", "1970-01-06"));
-            _members.Add(new Member(1, "Male", "John Doe", "Street 1", "12345", "555-1111", "john@mail.com", "1990-01-01"));
-            _members.Add(new Member(2, "Female", "Anna Smith", "Street 2", "23456", "555-2222", "anna@mail.com", "1992-04-12"));
-            _members.Add(new Member(4, "Male", "Bob Johnson", "Street 6", "15215", "555-3333", "bob@mail.com", "1985-09-09"));
-            _members.Add(new Member(5, "Male", "Kenny Dickson", "Street 12", "69431", "555-4444", "kenny@mail.com", "1996-05-06"));
-            _members.Add(new Member(6, "Female", "Emily Charlson", "Street 6", "78651", "555-5555", "emily@mail.com", "1990-03-08"));
-            _members.Add(new Member(7, "Female", "Jenny Erikson", "Street 13", "13584", "555-6666", "jenny@mail.com", "1970-01-06"));
-            _members.Add(new Member(1, "Male", "John Doe", "Street 1", "12345", "555-1111", "john@mail.com", "1990-01-01"));
-            _members.Add(new Member(2, "Female", "Anna Smith", "Street 2", "23456", "555-2222", "anna@mail.com", "1992-04-12"));
-            _members.Add(new Member(4, "Male", "Bob Johnson", "Street 6", "15215", "555-3333", "bob@mail.com", "1985-09-09"));
-            _members.Add(new Member(5, "Male", "Kenny Dickson", "Street 12", "69431", "555-4444", "kenny@mail.com", "1996-05-06"));
-            _members.Add(new Member(6, "Female", "Emily Charlson", "Street 6", "78651", "555-5555", "emily@mail.com", "1990-03-08"));
-            _members.Add(new Member(7, "Female", "Jenny Erikson", "Street 13", "13584", "555-6666", "jenny@mail.com", "1970-01-06"));
-            _members.Add(new Member(1, "Male", "John Doe", "Street 1", "12345", "555-1111", "john@mail.com", "1990-01-01"));
-            _members.Add(new Member(2, "Female", "Anna Smith", "Street 2", "23456", "555-2222", "anna@mail.com", "1992-04-12"));
-            _members.Add(new Member(4, "Male", "Bob Johnson", "Street 6", "15215", "555-3333", "bob@mail.com", "1985-09-09"));
-            _members.Add(new Member(5, "Male", "Kenny Dickson", "Street 12", "69431", "555-4444", "kenny@mail.com", "1996-05-06"));
-            _members.Add(new Member(6, "Female", "Emily Charlson", "Street 6", "78651", "555-5555", "emily@mail.com", "1990-03-08"));
-            _members.Add(new Member(7, "Female", "Jenny Erikson", "Street 13", "13584", "555-6666", "jenny@mail.com", "1970-01-06"));
-            _members.Add(new Member(1, "Male", "John Doe", "Street 1", "12345", "555-1111", "john@mail.com", "1990-01-01"));
-            _members.Add(new Member(2, "Female", "Anna Smith", "Street 2", "23456", "555-2222", "anna@mail.com", "1992-04-12"));
-            _members.Add(new Member(4, "Male", "Bob Johnson", "Street 6", "15215", "555-3333", "bob@mail.com", "1985-09-09"));
-            _members.Add(new Member(5, "Male", "Kenny Dickson", "Street 12", "69431", "555-4444", "kenny@mail.com", "1996-05-06"));
-            _members.Add(new Member(6, "Female", "Emily Charlson", "Street 6", "78651", "555-5555", "emily@mail.com", "1990-03-08"));
-            _members.Add(new Member(7, "Female", "Jenny Erikson", "Street 13", "13584", "555-6666", "jenny@mail.com", "1970-01-06"));
-        }
 
-
->>>>>>> Stashed changes
     }
 }
