@@ -5,21 +5,52 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MVVM.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="510" d:DesignWidth="1000">
+             d:DesignHeight="570" d:DesignWidth="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" CornerRadius="0,0,0,20"
-                d:Background="{StaticResource bg}">
+        <Border Grid.Column="0" Grid.RowSpan="2"
+                CornerRadius="0,20,20,20" d:Background="{StaticResource bg}">
 
         </Border>
 
-        <Border Grid.Column="1" CornerRadius="0,0,20,0"
-                d:Background="{StaticResource bgDark}">
-
+        <Border Grid.Column="1" Grid.Row="1"
+                CornerRadius="0,0,20,0" d:Background="{StaticResource bgDark}">
+            
+            <DataGrid RowStyle="{DynamicResource DataGridRowStyle1}" 
+                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
+                      Style="{DynamicResource DataGridStyle1}" 
+                     
+                      Margin="30" ItemsSource="{Binding Members}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="False" CanUserResizeColumns="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding MemberID}"
+                                        MinWidth="50"/>
+                    <DataGridTextColumn Header="Navn" Binding="{Binding Name}"
+                                        MinWidth="100"/>                    
+                    <DataGridTextColumn Header="Køn" Binding="{Binding Gender}"
+                                        MinWidth="60"/>
+                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address}" 
+                                        MinWidth="90"/>
+                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode}" 
+                                        MinWidth="80"/>
+                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" 
+                                        MinWidth="80"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" 
+                                        MinWidth="120"/>
+                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth}" 
+                                        MinWidth="110"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            
         </Border>
     </Grid>
 </UserControl>

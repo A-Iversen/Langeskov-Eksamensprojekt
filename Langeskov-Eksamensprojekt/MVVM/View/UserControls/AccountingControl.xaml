@@ -5,21 +5,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MVVM.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="510" d:DesignWidth="1000">
+             d:DesignHeight="570" d:DesignWidth="1000">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <Border Grid.Column="0" CornerRadius="0,0,0,20"
+        <Border Grid.Column="0" Grid.RowSpan="2"
+                CornerRadius="0,20,20,20"
                 d:Background="{StaticResource bg}">
 
         </Border>
 
-        <Border Grid.Column="1" CornerRadius="0,0,20,0"
+        <Border Grid.Column="1" Grid.Row="1"
+                CornerRadius="0,0,20,0"
                 d:Background="{StaticResource bgDark}">
-            
+
         </Border>
     </Grid>
 </UserControl>

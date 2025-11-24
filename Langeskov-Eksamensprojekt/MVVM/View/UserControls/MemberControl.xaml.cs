@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MVVM.ViewModel;
 
 namespace MVVM.View.UserControls
 {
@@ -23,6 +24,7 @@ namespace MVVM.View.UserControls
         public MemberControl()
         {
             InitializeComponent();
+            DataContext = new MemberViewModel();
         }
     }
 }
