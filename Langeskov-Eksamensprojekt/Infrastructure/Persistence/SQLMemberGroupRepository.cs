@@ -1,12 +1,13 @@
-﻿using Infrastructure.Model;
+﻿using Infrastructure.Abstraction;
+using Infrastructure.Model;
 
 namespace Infrastructure.Repository
 {
-    public class MemberGroupRepository : IRepository<MemberGroup>
+    public class SQLMemberGroupRepository : IMemberGroupRepository
     {
         private readonly string _connectionString;
 
-        public MemberGroupRepository(string connectionString)
+        public SQLMemberGroupRepository(string connectionString)
         {
             _connectionString = connectionString;
         }

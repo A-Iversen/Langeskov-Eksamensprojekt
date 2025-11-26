@@ -3,11 +3,11 @@ using Infrastructure.Model;
 
 namespace Infrastructure.Repository
 {
-   public class SqlMemberRepository : IMemberRepository
+   public class SQLMemberRepository : IMemberRepository
    {
        private readonly string _connectionString;
 
-       public SqlMemberRepository(string connectionString)
+       public SQLMemberRepository(string connectionString)
        {
            _connectionString = connectionString;
        }

@@ -28,7 +28,6 @@ namespace MVVM.ViewModel
         public string PostalCode { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
 
-        // Change parameter type from SQLMemberRepository to IMemberRepository
         public MemberViewModel(IMemberRepository repository)
         {
             _repository = repository;

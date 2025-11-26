@@ -11,7 +11,7 @@ namespace MVVM.ViewModel
 {
     class MainViewModel : ViewModelBase
     {
-		public string View { get; set; }
+		public string View { get; set; } = null!;
 
         private object _currentView = new MemberControl();
 

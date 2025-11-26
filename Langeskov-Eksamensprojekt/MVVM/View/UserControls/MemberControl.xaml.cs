@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MVVM.ViewModel;
+using Infrastructure.Repository;
+using Microsoft.Extensions.Configuration;
 
 namespace MVVM.View.UserControls
 {
@@ -21,7 +11,14 @@ namespace MVVM.View.UserControls
         public MemberControl()
         {
             InitializeComponent();
-            DataContext = new MemberViewModel();
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            string connectionString = config.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("FEJL: Connection string 'DefaultConnection' blev ikke fundet i appsettings.json.");
+
+            DataContext = new MemberViewModel(new SQLMemberRepository(connectionString));
         }
     }
 }
