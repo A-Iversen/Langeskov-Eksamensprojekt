@@ -31,6 +31,7 @@ namespace MVVM.ViewModel
         public MemberViewModel(IMemberRepository repository)
         {
             _repository = repository;
+
         }
 
         // Automatisk tildeling af Tilskudsgruppe baseret på fødselsdato.
@@ -96,6 +97,8 @@ namespace MVVM.ViewModel
             get { return _members; }
             set { _members = value; }
         }
+
+
 
 
     }
