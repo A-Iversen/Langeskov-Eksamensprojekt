@@ -27,27 +27,45 @@
             <DataGrid RowStyle="{DynamicResource DataGridRowStyle1}" 
                       ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
                       Style="{DynamicResource DataGridStyle1}" 
-                     
-                      Margin="30" ItemsSource="{Binding Members}"
+                      CanUserAddRows="True"
+                      HorizontalAlignment="Left"
+                      Width="auto"
+                        
+                      Margin="15,15,0,0" ItemsSource="{Binding Members}"
                       AutoGenerateColumns="False"
-                      IsReadOnly="False" CanUserResizeColumns="True">
+                      CanUserResizeColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding MemberID}"
-                                        MinWidth="50"/>
+                                        MinWidth="55"
+                                        IsReadOnly="True"/>
+                   
                     <DataGridTextColumn Header="Navn" Binding="{Binding Name}"
-                                        MinWidth="100"/>                    
+                                        MinWidth="100"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>                    
+                   
                     <DataGridTextColumn Header="Køn" Binding="{Binding Gender}"
-                                        MinWidth="60"/>
+                                        MinWidth="65"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+                  
                     <DataGridTextColumn Header="Addresse" Binding="{Binding Address}" 
-                                        MinWidth="90"/>
+                                        MinWidth="95"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+                  
                     <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode}" 
-                                        MinWidth="80"/>
+                                        MinWidth="85"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+                    
                     <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" 
-                                        MinWidth="80"/>
+                                        MinWidth="85"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+                   
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" 
-                                        MinWidth="120"/>
+                                        MinWidth="120"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+                   
                     <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth}" 
-                                        MinWidth="110"/>
+                                        Width="110"
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
                 </DataGrid.Columns>
             </DataGrid>
             
