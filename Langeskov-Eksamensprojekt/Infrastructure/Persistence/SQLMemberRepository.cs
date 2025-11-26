@@ -16,19 +16,19 @@ namespace Infrastructure.Repository
        {
            var member = new Member
            {
-               MemberID = (int)reader["MemberID"],
-               Name = (string)reader["Name"],
-               Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : (string)reader["Email"],
-               Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : (string)reader["Address"],
-               PostalCode = reader.IsDBNull(reader.GetOrdinal("PostalCode")) ? null : (string)reader["PostalCode"],
-               PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : (string)reader["PhoneNumber"],
-               Gender = reader.IsDBNull(reader.GetOrdinal("Gender")) ? null : (string)reader["Gender"],
-               DateOfBirth = (DateTime)reader["DateOfBirth"]
+               MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+               Name = reader.GetString(reader.GetOrdinal("Name")),
+               Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
+               Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address")),
+               PostalCode = reader.IsDBNull(reader.GetOrdinal("PostalCode")) ? null : reader.GetString(reader.GetOrdinal("PostalCode")),
+               PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber")),
+               Gender = reader.IsDBNull(reader.GetOrdinal("Gender")) ? null : reader.GetString(reader.GetOrdinal("Gender")),
+               DateOfBirth = reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))
            };
            
            // Set private properties using methods
-           member.SetSubsidyGroup((int)reader["SubsidyGroupID"]);
-           member.SetMemberGroupID((int)reader["MemberGroupID"]);
+           member.SetSubsidyGroup(reader.GetInt32(reader.GetOrdinal("SubsidyGroupID")));
+           member.SetMemberGroupID(reader.GetInt32(reader.GetOrdinal("MemberGroupID")));
            
            return member;
        }
@@ -91,11 +91,11 @@ namespace Infrastructure.Repository
            {
                SqlCommand command = new SqlCommand(query, connection);
                command.Parameters.AddWithValue("@Name", entity.Name);
-               command.Parameters.AddWithValue("@Email", (object)entity.Email ?? DBNull.Value); // Håndterer null
-               command.Parameters.AddWithValue("@Address", (object)entity.Address ?? DBNull.Value);
-               command.Parameters.AddWithValue("@PostalCode", (object)entity.PostalCode ?? DBNull.Value);
-               command.Parameters.AddWithValue("@PhoneNumber", (object)entity.PhoneNumber ?? DBNull.Value);
-               command.Parameters.AddWithValue("@Gender", (object)entity.Gender ?? DBNull.Value);
+               command.Parameters.AddWithValue("@Email", (object?)entity.Email ?? DBNull.Value); // Håndterer null
+               command.Parameters.AddWithValue("@Address", (object?)entity.Address ?? DBNull.Value);
+               command.Parameters.AddWithValue("@PostalCode", (object?)entity.PostalCode ?? DBNull.Value);
+               command.Parameters.AddWithValue("@PhoneNumber", (object?)entity.PhoneNumber ?? DBNull.Value);
+               command.Parameters.AddWithValue("@Gender", (object?)entity.Gender ?? DBNull.Value);
                command.Parameters.AddWithValue("@DateOfBirth", entity.DateOfBirth);
                command.Parameters.AddWithValue("@SubsidyGroupID", entity.SubsidyGroupID);
                command.Parameters.AddWithValue("@MemberGroupID", entity.MemberGroupID);
@@ -135,11 +135,11 @@ namespace Infrastructure.Repository
                SqlCommand command = new SqlCommand(query, connection);
                command.Parameters.AddWithValue("@MemberID", entity.MemberID);
                command.Parameters.AddWithValue("@Name", entity.Name);
-               command.Parameters.AddWithValue("@Email", (object)entity.Email ?? DBNull.Value);
-               command.Parameters.AddWithValue("@Address", (object)entity.Address ?? DBNull.Value);
-               command.Parameters.AddWithValue("@PostalCode", (object)entity.PostalCode ?? DBNull.Value);
-               command.Parameters.AddWithValue("@PhoneNumber", (object)entity.PhoneNumber ?? DBNull.Value);
-               command.Parameters.AddWithValue("@Gender", (object)entity.Gender ?? DBNull.Value);
+               command.Parameters.AddWithValue("@Email", (object?)entity.Email ?? DBNull.Value);
+               command.Parameters.AddWithValue("@Address", (object?)entity.Address ?? DBNull.Value);
+               command.Parameters.AddWithValue("@PostalCode", (object?)entity.PostalCode ?? DBNull.Value);
+               command.Parameters.AddWithValue("@PhoneNumber", (object?)entity.PhoneNumber ?? DBNull.Value);
+               command.Parameters.AddWithValue("@Gender", (object?)entity.Gender ?? DBNull.Value);
                command.Parameters.AddWithValue("@DateOfBirth", entity.DateOfBirth);
                command.Parameters.AddWithValue("@SubsidyGroupID", entity.SubsidyGroupID);
                command.Parameters.AddWithValue("@MemberGroupID", entity.MemberGroupID);

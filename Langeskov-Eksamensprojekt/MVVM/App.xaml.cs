@@ -1,11 +1,9 @@
 ﻿using System.IO;
 using System.Windows;
-using Infrastructure.Model;
 using Infrastructure;
-using Infrastructure.Abstraction;
-using Infrastructure.Repository;
 using MVVM.ViewModel;
 using Microsoft.Extensions.Configuration;
+using MVVM.View;
 
 
 namespace MVVM
@@ -23,14 +21,10 @@ namespace MVVM
 
             DatabaseInitializer.Initialize(connectionString);
 
-            IMemberRepository memberRepository = new SQLMemberRepository(connectionString);
-            IMemberGroupRepository memberGroupRepository = new SQLMemberGroupRepository(connectionString);
+            MainViewModel mainViewModel = new MainViewModel(); 
+            MainWindow mainWindow = new MainWindow { DataContext = mainViewModel };
 
-
-            // MainViewModel mainViewModel = new MainViewModel(memberRepository, memberGroupRepository); 
-            // MainWindow mainWindow = new MainWindow { DataContext = mainViewModel };
-
-            // mainWindow.Show();
+            mainWindow.Show();
         }
     }
 }

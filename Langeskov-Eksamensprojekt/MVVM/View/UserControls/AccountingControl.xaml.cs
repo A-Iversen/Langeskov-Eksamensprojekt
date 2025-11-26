@@ -1,30 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MVVM.ViewModel;
+using Infrastructure.Repository;
+using Microsoft.Extensions.Configuration;
+using Infrastructure.Abstraction;
 
 namespace MVVM.View.UserControls
 {
-    /// <summary>
-    /// Interaction logic for AccountingControl.xaml
-    /// </summary>
     public partial class AccountingControl : UserControl
     {
         public AccountingControl()
         {
             InitializeComponent();
-            DataContext = new AccountingViewModel();
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            string connectionString = config.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("FEJL: Connection string 'DefaultConnection' blev ikke fundet i appsettings.json.");
+
+            IMemberGroupRepository memberGroupRepository = new SQLMemberGroupRepository(connectionString);
+            DataContext = new AccountingViewModel(memberGroupRepository);
         }
     }
 }

@@ -25,7 +25,13 @@
         <Border Grid.Column="1" Grid.Row="1"
                 CornerRadius="0,0,20,0"
                 d:Background="{StaticResource bgDark}">
-
+            <DataGrid ItemsSource="{Binding MemberGroups}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Group ID" Binding="{Binding MemberGroupID}" />
+                    <DataGridTextColumn Header="Group Name" Binding="{Binding MemberGroupName}" />
+                    <DataGridTextColumn Header="Subscription Fee" Binding="{Binding SubscriptionFee}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Border>
     </Grid>
 </UserControl>
