@@ -80,5 +80,42 @@ VALUES
 
 -- 7. Ung Voksen (Tæt på grænsen)
 ('Clara Cyklist', 'clara@eksempel.dk', 'Studiebyen 1', '5300', '10203040', 'I', '2001-11-11', 3, 1);
+-- 8. Voksen (Betalende single)
+('Martin Målsætning', 'martin@mail.dk', 'Industrivej 10', '5300', '40506070', 'I', '1990-04-10', 4, 1),      -- Voksen (25-59). Indenbys. IKKE tilskudsberettiget.
 
+-- 9. Barn (Family, Indenbys)
+('Pia Plask', 'pia@familie.dk', 'Havnevej 3', '5300', '19283746', 'I', '2018-02-15', 1, 3),                  -- Barn (0-12). Indenbys. TILSKUDSBERETTIGET (<25, I).
+
+-- 10. Senior (Betalende)
+('Grethe Grøn', 'grethe@gammel.dk', 'Æblehaven 7', '5550', '21324354', 'I', '1948-09-03', 5, 1),            -- Senior (60+). Indenbys. IKKE tilskudsberettiget.
+
+-- 11. Ungdom (Udenbys, Single)
+('Felix Fart', 'felix@ung.dk', 'Odensevej 20', '5000', '87654321', 'U', '2008-01-25', 2, 1),                 -- Ungdom (13-18). Udenbys. IKKE tilskudsberettiget (U).
+
+-- 12. Voksen (Family, Udenbys)
+('Hanne Høj', 'hanne@family.dk', 'Bygaden 1', '5550', '65748392', 'U', '1975-12-01', 4, 3),                 -- Voksen (25-59). Udenbys. IKKE tilskudsberettiget.
+
+-- 13. Voksen (Family, Udenbys)
+('Lars Lav', 'lars@family.dk', 'Bygaden 1', '5550', '65748392', 'U', '1973-10-10', 4, 3),                  -- Voksen (25-59). Udenbys. IKKE tilskudsberettiget.
+
+-- 14. Ung Voksen (Tilskudsberettiget, Indenbys)
+('Niels Nybegynder', 'niels@nyt.dk', 'Nyvej 1', '5380', '12121212', 'I', '2004-05-18', 3, 1),               -- Ung Voksen (19-24). Indenbys. TILSKUDSBERETTIGET (<25, I).
+
+-- 15. Senior (Gratis, Bestyrelse)
+('Birgit Bilag', 'birgit@bestyrelse.dk', 'Finansvej 5', '5300', '13579086', 'I', '1950-08-22', 5, 2),       -- Senior (60+). Gratis gruppe. IKKE tilskudsberettiget.
+
+-- 16. Barn (Family, Udenbys)
+('Elias Ege', 'elias@skov.dk', 'Skovstien 1', '6000', '99001100', 'U', '2012-04-01', 1, 3),                 -- Barn (0-12). Udenbys. IKKE tilskudsberettiget (U).
+
+-- 17. Voksen (Family, Indenbys)
+('Freja Fynbo', 'freja@fyn.dk', 'Østgade 1', '5300', '50403020', 'I', '1980-06-06', 4, 3),                 -- Voksen (25-59). Indenbys. IKKE tilskudsberettiget.
+
+-- 18. Voksen (Family, Indenbys)
+('Jens Jylland', 'jens@fyn.dk', 'Østgade 1', '5300', '50403020', 'I', '1978-07-07', 4, 3),                 -- Voksen (25-59). Indenbys. IKKE tilskudsberettiget.
+
+-- 19. Ungdom (Indenbys, Single)
+('Katrine Kvik', 'katrine@kvik.dk', 'Søvejen 9', '5380', '14725836', 'I', '2007-03-20', 2, 1),               -- Ungdom (13-18). Indenbys. TILSKUDSBERETTIGET (<25, I).
+
+-- 20. Ung Voksen (Udenbys, Single)
+('Oscar Overtal', 'oscar@over.dk', 'Aarhusvej 1', '8000', '10101010', 'U', '2000-12-12', 3, 1); 
 );
