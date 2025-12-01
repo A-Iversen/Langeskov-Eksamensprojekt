@@ -55,6 +55,8 @@ CREATE TABLE Member (
         
     CONSTRAINT FK_Member_MemberGroup 
         FOREIGN KEY (MemberGroupID) REFERENCES MemberGroup(MemberGroupID)
+);
+GO
 
 -- SEED MEMBERS (Ekempler på forskellige medlemmer)
 
@@ -117,5 +119,4 @@ VALUES
 ('Katrine Kvik', 'katrine@kvik.dk', 'Søvejen 9', '5380', '14725836', 'I', '2007-03-20', 2, 1),               -- Ungdom (13-18). Indenbys. TILSKUDSBERETTIGET (<25, I).
 
 -- 20. Ung Voksen (Udenbys, Single)
-('Oscar Overtal', 'oscar@over.dk', 'Aarhusvej 1', '8000', '10101010', 'U', '2000-12-12', 3, 1); 
-);
+('Oscar Overtal', 'oscar@over.dk', 'Aarhusvej 1', '8000', '10101010', 'U', '2000-12-12', 3, 1);
