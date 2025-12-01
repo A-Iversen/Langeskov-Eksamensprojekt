@@ -67,4 +67,108 @@
         </Style.Triggers>
     </Style>
 
+    
+    
+    <!--Delete & Add Buttons-->
+    <Style x:Key="addButton" TargetType="RadioButton">
+        <Setter Property="Width" Value="auto"/>
+        <Setter Property="Height" Value="auto"/>
+        <Setter Property="Background" Value="{StaticResource info}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{StaticResource text}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="addButtonBorder" Width="20" Height="60" CornerRadius="2,9,3,9"
+                    Margin="0,15,0,0"
+                    BorderThickness="0,2,2,0"
+                    BorderBrush="{TemplateBinding BorderBrush}">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="{Binding Source={StaticResource info},Path=Color}"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    </Border>
+                
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="addButtonBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{Binding Source={StaticResource info},Path=Color}"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="addButtonBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{Binding Source={StaticResource bg},Path=Color}" Offset="0.2"/>
+                                        <GradientStop Color="{Binding Source={StaticResource info},Path=Color}" Offset="0.2"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="addButtonBorder" Property="Width" Value="25"/>
+                            <Setter TargetName="addButtonBorder" Property="HorizontalAlignment" Value="Left"/>
+                            <Setter TargetName="addButtonBorder" Property="CornerRadius" Value="0,9,5,9"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="addButtonBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="{Binding Source={StaticResource info},Path=Color}"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush" Value="{StaticResource info}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+    
+    
+    
+    <Style x:Key="removeButton" TargetType="Button">
+        <Setter Property="Width" Value="auto"/>
+        <Setter Property="Height" Value="auto"/>
+        <Setter Property="Background" Value="{StaticResource dangerMuted}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="{StaticResource text}"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Width="20" Height="60" CornerRadius="2,9,3,9"
+                    Background="{TemplateBinding Background}" 
+                    Margin="0,15,0,0"
+                    BorderThickness="2,0,0,2"
+                    BorderBrush="{TemplateBinding BorderBrush}">
+                        
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    </Border>
+                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource danger}"/>
+                        </Trigger>
+            
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource dangerMuted}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource danger}"/>
+                        </Trigger>
+            
+                    </ControlTemplate.Triggers>                
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

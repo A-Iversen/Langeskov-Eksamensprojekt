@@ -18,8 +18,12 @@
 
     <!--alerts-->
     <SolidColorBrush x:Key="danger" Color="#FFCB2F32"/>
+    <SolidColorBrush x:Key="dangerMuted" Color="#FFCF4E50"/>
+    
     <SolidColorBrush x:Key="warning" Color="#FFF0C53F"/>
+    
     <SolidColorBrush x:Key="success" Color="#FF22BB33"/>
+    
     <SolidColorBrush x:Key="info" Color="#FF0078D7"/>
 
     <!--Company Colors-->

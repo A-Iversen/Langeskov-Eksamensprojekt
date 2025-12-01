@@ -9,66 +9,155 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
+        
+        <!--Left Panel-->
         <Border Grid.Column="0" Grid.RowSpan="2"
                 CornerRadius="0,20,20,20" d:Background="{StaticResource bg}">
 
+            <StackPanel Margin="5,20,0,0"
+                        HorizontalAlignment="Left">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Style="{StaticResource textBox}" Tag="Fornavn"
+                         Text="{Binding Placeholder}"
+                         Margin="0,20,0,0" Width="90"/>
+
+                    <TextBox Style="{StaticResource textBox}" Tag="Efternavn"
+                         Text="{Binding Placeholder}"
+                         Margin="5,20,0,0" Width="90"/>
+                </StackPanel>
+
+                <ComboBox Margin="0,20,0,0"
+                          Height="30"
+                          Width="auto">
+                </ComboBox>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Style="{StaticResource textBox}" Tag="Adresse"
+                         Text="{Binding Placeholder}"
+                         Margin="0,20,0,0" Width="100"/>
+
+                    <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
+                         Text="{Binding Placeholder}"
+                         Margin="5,20,0,0" Width="80"/>
+                </StackPanel>
+
+
+                <TextBox Style="{StaticResource textBox}" Tag="Email"
+                         Text="{Binding Placeholder}"
+                         Margin="0,20,0,0"
+                         HorizontalAlignment="Left"
+                         Width="185"/>
+
+                <TextBox Style="{StaticResource textBox}" Tag="Telefon"
+                         Text="{Binding Placeholder}"
+                         Margin="0,20,0,0"
+                         HorizontalAlignment="Left"
+                         Width="185"/>
+
+                <DatePicker
+                            Margin="0,20,0,0">
+
+                </DatePicker>
+
+                <Button Height="35"
+                        Width="140"
+                        Margin="0,190,0,0"
+                        Content="Tilføj Bruger">
+                    
+                </Button>
+
+            </StackPanel>
+
+
+
         </Border>
 
-        <Border Grid.Column="1" Grid.Row="1"
-                CornerRadius="0,0,20,0" d:Background="{StaticResource bgDark}">
+
+        <!--Middle Buttons-->
+        <RadioButton Style="{StaticResource addButton}"
+                     Grid.Column="1" Grid.Row="1"
+                     VerticalAlignment="Top">
             
-            <DataGrid RowStyle="{DynamicResource DataGridRowStyle1}" 
-                      ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" 
-                      Style="{DynamicResource DataGridStyle1}" 
+            <Viewbox Width="20" Height="17" VerticalAlignment="Top"
+                     Margin="0,5,3,0">
+                <Path Style="{StaticResource AddUserLogo}"
+                      Fill="White"/>
+            </Viewbox>
+        </RadioButton>
+
+        <Button Style="{StaticResource removeButton}"
+                Grid.Column="1" Grid.Row="1"
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,15"
+                IsEnabled="{Binding SelectedItem, ElementName=memberDataGrid}">
+
+            <Viewbox Width="20" Height="17" VerticalAlignment="Top"
+                     Margin="-5,5,0,0">
+                <Path Style="{StaticResource RemoveUserLogo}"
+                      Fill="White"/>
+            </Viewbox>
+        </Button>
+            
+        
+        <!--datagrid-->
+        <Border Grid.Column="2" Grid.Row="1"
+                CornerRadius="0,0,20,0" d:Background="{StaticResource bgDark}" Grid.ColumnSpan="2">
+
+            <DataGrid x:Name="memberDataGrid" RowStyle="{StaticResource DataGridRowStyle1}" 
+                      ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
+                      Style="{StaticResource DataGridStyle1}" 
                       CanUserAddRows="True"
                       HorizontalAlignment="Left"
                       Width="auto"
                         
-                      Margin="15,15,0,0" ItemsSource="{Binding Members}"
+                      Margin="3,15,0,0" ItemsSource="{Binding Members}"
                       AutoGenerateColumns="False"
                       CanUserResizeColumns="False">
+
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding MemberID}"
                                         MinWidth="55"
                                         IsReadOnly="True"/>
-                   
+
                     <DataGridTextColumn Header="Navn" Binding="{Binding Name}"
                                         MinWidth="100"
-                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>                    
-                   
+                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+
                     <DataGridTextColumn Header="Køn" Binding="{Binding Gender}"
                                         MinWidth="65"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
-                  
+
                     <DataGridTextColumn Header="Addresse" Binding="{Binding Address}" 
                                         MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
-                  
+
                     <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode}" 
                                         MinWidth="85"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
-                    
+
                     <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" 
                                         MinWidth="85"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
-                   
+
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" 
                                         MinWidth="120"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
-                   
+
                     <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth}" 
                                         Width="110"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            
+
         </Border>
     </Grid>
 </UserControl>

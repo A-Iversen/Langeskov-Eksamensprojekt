@@ -92,7 +92,7 @@
                     Grid.Column="2" Grid.RowSpan="3">
                 <StackPanel Orientation="Horizontal">
                     
-                    <RadioButton Style="{StaticResource menuButton}" Tag="{StaticResource IconPrinters}" IsChecked="True"
+                    <RadioButton Style="{StaticResource menuButton}" IsChecked="True"
                                  Command="{Binding ShowMemberViewCommand}">
                         
                         <Viewbox Width="50" Height="100" VerticalAlignment="Bottom"> 
@@ -102,7 +102,7 @@
                     </RadioButton>
 
                     
-                    <RadioButton Style="{StaticResource menuButton}"  Tag="{StaticResource IconUsers}"
+                    <RadioButton Style="{StaticResource menuButton}" 
                                  Command="{Binding ShowAccountingViewCommand}">
 
                         <Viewbox Width="60" Height="110" VerticalAlignment="Bottom">
