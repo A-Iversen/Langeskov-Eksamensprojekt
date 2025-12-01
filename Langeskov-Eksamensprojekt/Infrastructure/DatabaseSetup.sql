@@ -79,7 +79,7 @@ VALUES
 ('Jesper Løber', 'jesper@eksempel.dk', 'Skolevej 5', '5300', '98765432', 'I', '1988-02-14', 4, 3),
 
 -- 7. Ung Voksen (Tæt på grænsen)
-('Clara Cyklist', 'clara@eksempel.dk', 'Studiebyen 1', '5300', '10203040', 'I', '2001-11-11', 3, 1);
+('Clara Cyklist', 'clara@eksempel.dk', 'Studiebyen 1', '5300', '10203040', 'I', '2001-11-11', 3, 1),
 -- 8. Voksen (Betalende single)
 ('Martin Målsætning', 'martin@mail.dk', 'Industrivej 10', '5300', '40506070', 'I', '1990-04-10', 4, 1),      -- Voksen (25-59). Indenbys. IKKE tilskudsberettiget.
 
