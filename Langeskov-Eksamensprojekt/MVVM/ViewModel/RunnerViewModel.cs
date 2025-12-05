@@ -31,7 +31,18 @@ namespace MVVM.ViewModel
         public RunnerViewModel(IRunnerRepository repository)
         {
             _repository = repository;
+            LoadRunners();
 
+        }
+
+        private void LoadRunners()
+        {
+            var runners = _repository.GetAll();
+            _runners.Clear();
+            foreach (var runner in runners)
+            {
+                _runners.Add(runner);
+            }
         }
 
         // Automatisk tildeling af Tilskudsgruppe baseret på fødselsdato.
