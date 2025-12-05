@@ -3,20 +3,20 @@ using Infrastructure.Model;
 
 namespace Infrastructure.Repository
 {
-   public class SQLMemberRepository : IMemberRepository
+   public class SQLRunnerRepository : IRunnerRepository
    {
        private readonly string _connectionString;
 
-       public SQLMemberRepository(string connectionString)
+       public SQLRunnerRepository(string connectionString)
        {
            _connectionString = connectionString;
        }
 
-       private Member MapMember(SqlDataReader reader)
+       private Runner MapRunner(SqlDataReader reader)
        {
-           var member = new Member
+           var runner = new Runner
            {
-               MemberID = reader.GetInt32(reader.GetOrdinal("MemberID")),
+               RunnerID = reader.GetInt32(reader.GetOrdinal("RunnerID")),
                Name = reader.GetString(reader.GetOrdinal("Name")),
                Email = reader.IsDBNull(reader.GetOrdinal("Email")) ? null : reader.GetString(reader.GetOrdinal("Email")),
                Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address")),
@@ -27,17 +27,17 @@ namespace Infrastructure.Repository
            };
            
            // Set private properties using methods
-           member.SetSubsidyGroup(reader.GetInt32(reader.GetOrdinal("SubsidyGroupID")));
-           member.SetMemberGroupID(reader.GetInt32(reader.GetOrdinal("MemberGroupID")));
+           runner.SetSubsidyGroup(reader.GetInt32(reader.GetOrdinal("SubsidyGroupID")));
+           runner.SetRunnerGroupID(reader.GetInt32(reader.GetOrdinal("RunnerGroupID")));
            
-           return member;
+           return runner;
        }
 
-       // SQL: SELECT * FROM MEMBER.
-       public IEnumerable<Member> GetAll()
+       // SQL: SELECT * FROM RUNNER.
+       public IEnumerable<Runner> GetAll()
        {
-           var members = new List<Member>();
-           string query = "SELECT MemberID, Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, MemberGroupID FROM Member";
+           var runners = new List<Runner>();
+           string query = "SELECT RunnerID, Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, RunnerGroupID FROM Runner";
 
            using (SqlConnection connection = new SqlConnection(_connectionString))
            {
@@ -48,43 +48,43 @@ namespace Infrastructure.Repository
                {
                    while (reader.Read())
                    {
-                       members.Add(MapMember(reader));
+                       runners.Add(MapRunner(reader));
                    }
                }
            }
-           return members;
+           return runners;
        }
 
-       // SQL: SELECT * FROM MEMBER WHERE MemberID = @ID.
-       public Member? GetById(int id)
+       // SQL: SELECT * FROM RUNNER WHERE RunnerID = @ID.
+       public Runner? GetById(int id)
        {
-           Member? member = null;
-           string query = "SELECT MemberID, Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, MemberGroupID FROM Member WHERE MemberID = @MemberID";
+           Runner? runner = null;
+           string query = "SELECT RunnerID, Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, RunnerGroupID FROM Runner WHERE RunnerID = @RunnerID";
 
            using (SqlConnection connection = new SqlConnection(_connectionString))
            {
                SqlCommand command = new SqlCommand(query, connection);
-               command.Parameters.AddWithValue("@MemberID", id);
+               command.Parameters.AddWithValue("@RunnerID", id);
                connection.Open();
 
                using (SqlDataReader reader = command.ExecuteReader())
                {
                    if (reader.Read())
                    {
-                       member = MapMember(reader);
+                       runner = MapRunner(reader);
                    }
                }
            }
-           return member;
+           return runner;
        }
        
-       // SQL: INSERT INTO MEMBER ...; SELECT SCOPE_IDENTITY()
-       public Member Add(Member entity)
+       // SQL: INSERT INTO RUNNER ...; SELECT SCOPE_IDENTITY()
+       public Runner Add(Runner entity)
        {
-           // alle felter undtagen MemberID, da den auto-genereres.
+           // alle felter undtagen RunnerID, da den auto-genereres.
            string query = @"
-           INSERT INTO Member (Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, MemberGroupID) 
-           VALUES (@Name, @Email, @Address, @PostalCode, @PhoneNumber, @Gender, @DateOfBirth, @SubsidyGroupID, @MemberGroupID);
+           INSERT INTO Runner (Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, RunnerGroupID) 
+           VALUES (@Name, @Email, @Address, @PostalCode, @PhoneNumber, @Gender, @DateOfBirth, @SubsidyGroupID, @RunnerGroupID);
            SELECT SCOPE_IDENTITY();";
 
            using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -98,7 +98,7 @@ namespace Infrastructure.Repository
                command.Parameters.AddWithValue("@Gender", (object?)entity.Gender ?? DBNull.Value);
                command.Parameters.AddWithValue("@DateOfBirth", entity.DateOfBirth);
                command.Parameters.AddWithValue("@SubsidyGroupID", entity.SubsidyGroupID);
-               command.Parameters.AddWithValue("@MemberGroupID", entity.MemberGroupID);
+               command.Parameters.AddWithValue("@RunnerGroupID", entity.RunnerGroupID);
 
                connection.Open();
 
@@ -106,19 +106,19 @@ namespace Infrastructure.Repository
                object result = command.ExecuteScalar();
                if (result != null)
                {
-                   entity.MemberID = Convert.ToInt32(result);
+                   entity.RunnerID = Convert.ToInt32(result);
                }
            }
            // Returnerer entiteten med det tildelte ID.
            return entity;
        }
 
-       // SQL: UPDATE MEMBER SET ... WHERE MemberID = @ID.
+       // SQL: UPDATE RUNNER SET ... WHERE RunnerID = @ID.
 
-       public void Update(Member entity)
+       public void Update(Runner entity)
        {
            string query = @"
-           UPDATE Member SET 
+           UPDATE Runner SET 
                Name = @Name, 
                Email = @Email, 
                Address = @Address, 
@@ -127,13 +127,13 @@ namespace Infrastructure.Repository
                Gender = @Gender, 
                DateOfBirth = @DateOfBirth, 
                SubsidyGroupID = @SubsidyGroupID,
-               MemberGroupID = @MemberGroupID
-           WHERE MemberID = @MemberID";
+               RunnerGroupID = @RunnerGroupID
+           WHERE RunnerID = @RunnerID";
 
            using (SqlConnection connection = new SqlConnection(_connectionString))
            {
                SqlCommand command = new SqlCommand(query, connection);
-               command.Parameters.AddWithValue("@MemberID", entity.MemberID);
+               command.Parameters.AddWithValue("@RunnerID", entity.RunnerID);
                command.Parameters.AddWithValue("@Name", entity.Name);
                command.Parameters.AddWithValue("@Email", (object?)entity.Email ?? DBNull.Value);
                command.Parameters.AddWithValue("@Address", (object?)entity.Address ?? DBNull.Value);
@@ -142,7 +142,7 @@ namespace Infrastructure.Repository
                command.Parameters.AddWithValue("@Gender", (object?)entity.Gender ?? DBNull.Value);
                command.Parameters.AddWithValue("@DateOfBirth", entity.DateOfBirth);
                command.Parameters.AddWithValue("@SubsidyGroupID", entity.SubsidyGroupID);
-               command.Parameters.AddWithValue("@MemberGroupID", entity.MemberGroupID);
+               command.Parameters.AddWithValue("@RunnerGroupID", entity.RunnerGroupID);
 
                connection.Open();
                command.ExecuteNonQuery();
@@ -151,21 +151,21 @@ namespace Infrastructure.Repository
 
        public void Delete(int id)
        {
-           string query = "DELETE FROM Member WHERE MemberID = @MemberID";
+           string query = "DELETE FROM Runner WHERE RunnerID = @RunnerID";
 
            using (SqlConnection connection = new SqlConnection(_connectionString))
            {
                SqlCommand command = new SqlCommand(query, connection);
-               command.Parameters.AddWithValue("@MemberID", id);
+               command.Parameters.AddWithValue("@RunnerID", id);
                connection.Open();
                command.ExecuteNonQuery();
            }
        }
 
-       // MemberExists() fra interface
-       public bool MemberExists(string name, DateTime dateOfBirth)
+       // RunnerExists() fra interface
+       public bool RunnerExists(string name, DateTime dateOfBirth)
        {
-           string query = "SELECT COUNT(1) FROM Member WHERE Name = @Name AND DateOfBirth = @DateOfBirth";
+           string query = "SELECT COUNT(1) FROM Runner WHERE Name = @Name AND DateOfBirth = @DateOfBirth";
            int count = 0;
 
            using (SqlConnection connection = new SqlConnection(_connectionString))

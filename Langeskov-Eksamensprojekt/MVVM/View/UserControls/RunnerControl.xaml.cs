@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace MVVM.View.UserControls
 {
-    public partial class MemberControl : UserControl
+    public partial class RunnerControl : UserControl
     {
-        public MemberControl()
+        public RunnerControl()
         {
             InitializeComponent();
             IConfigurationRoot config = new ConfigurationBuilder()
@@ -18,7 +18,7 @@ namespace MVVM.View.UserControls
 
             string connectionString = config.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("FEJL: Connection string 'DefaultConnection' blev ikke fundet i appsettings.json.");
 
-            DataContext = new MemberViewModel(new SQLMemberRepository(connectionString));
+            DataContext = new RunnerViewModel(new SQLRunnerRepository(connectionString));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MVVM.ViewModel
     {
 		public string View { get; set; } = null!;
 
-        private object _currentView = new MemberControl();
+        private object _currentView = new RunnerControl();
 
 		public object CurrentView
 		{
@@ -23,7 +23,7 @@ namespace MVVM.ViewModel
 			}
 		}
 
-        public RelayCommand ShowMemberViewCommand => new RelayCommand(execute => CurrentView = new MemberControl());
+        public RelayCommand ShowRunnerViewCommand => new RelayCommand(execute => CurrentView = new RunnerControl());
 		public RelayCommand ShowAccountingViewCommand => new RelayCommand(execute => CurrentView = new AccountingControl());
 
 

@@ -2,9 +2,9 @@ using System;
 
 namespace Infrastructure.Model
 {
-    public class Member
+    public class Runner
     {
-        public int MemberID { get; set; }
+        public int RunnerID { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Email { get; set; }
         public string? Address { get; set; }
@@ -17,11 +17,11 @@ namespace Infrastructure.Model
         public int SubsidyGroupID { get; private set; }
 
         // FK fra MemberGroup - bruger nu integer ID i stedet for string navn
-        public int MemberGroupID { get; private set; }
+        public int RunnerGroupID { get; private set; }
 
-        public Member() { }
+        public Runner() { }
 
-        public Member(string name, string? email, string? address, string? postalCode, string? phoneNumber, string? gender, DateTime dateOfBirth, int memberGroupID)
+        public Runner(string name, string? email, string? address, string? postalCode, string? phoneNumber, string? gender, DateTime dateOfBirth, int runnerGroupID)
         {
             Name = name;
             Email = email;
@@ -30,7 +30,7 @@ namespace Infrastructure.Model
             PhoneNumber = phoneNumber;
             Gender = gender;
             DateOfBirth = dateOfBirth;
-            MemberGroupID = memberGroupID;
+            RunnerGroupID = runnerGroupID;
         }
 
         // bruges af ViewModel
@@ -40,9 +40,9 @@ namespace Infrastructure.Model
         }
 
         // bruges af Repository til at sætte MemberGroupID fra database
-        public void SetMemberGroupID(int memberGroupID)
+        public void SetRunnerGroupID(int runnerGroupID)
         {
-            MemberGroupID = memberGroupID;
+            RunnerGroupID = runnerGroupID;
         }
     }
 }

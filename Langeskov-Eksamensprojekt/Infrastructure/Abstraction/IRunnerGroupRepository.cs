@@ -8,9 +8,9 @@ using Infrastructure.Repository;
 
 namespace Infrastructure.Abstraction
 {
-    public interface IMemberGroupRepository : IRepository<MemberGroup>
+    public interface IRunnerGroupRepository : IRepository<RunnerGroup>
     {
         // Hvis der er brug for at hente en gruppe baseret på navn, kan vi tilføje denne metode:
-        // MemberGroup? GetByName(string name);
+        // RunnerGroup? GetByName(string name);
     }
 }

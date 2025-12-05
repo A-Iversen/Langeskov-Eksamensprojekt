@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace MVVM.ViewModel
 {
-    public class MemberViewModel
+    public class RunnerViewModel
     {
-        private readonly IMemberRepository _repository;
+        private readonly IRunnerRepository _repository;
 
         // Den valgte medlemskabstype fra UI - bruger nu integer ID i stedet for string navn
-        public int SelectedMemberGroupID { get; set; }
+        public int SelectedRunnerGroupID { get; set; }
 
         // Properties for dataindtastning (binder til View/UI)
         public string Name { get; set; } = string.Empty;
@@ -28,7 +28,7 @@ namespace MVVM.ViewModel
         public string PostalCode { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public MemberViewModel(IMemberRepository repository)
+        public RunnerViewModel(IRunnerRepository repository)
         {
             _repository = repository;
 
@@ -62,40 +62,40 @@ namespace MVVM.ViewModel
         }
 
         // Tilmelding af nyt medlem
-        public Member CreateNewMember()
+        public Runner CreateNewRunner()
         {
-            if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedMemberGroupID <= 0)
+            if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
             {
                 throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
             }
 
-            if (_repository.MemberExists(Name, DateOfBirth))
+            if (_repository.RunnerExists(Name, DateOfBirth))
             {
                 throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
             }
 
-            var newMember = new Member(name: Name, email: Email, address: Address, postalCode: PostalCode, phoneNumber: PhoneNumber, gender: Gender, dateOfBirth: DateOfBirth, memberGroupID: SelectedMemberGroupID);
+            var newRunner = new Runner(name: Name, email: Email, address: Address, postalCode: PostalCode, phoneNumber: PhoneNumber, gender: Gender, dateOfBirth: DateOfBirth, runnerGroupID: SelectedRunnerGroupID);
 
             // Automatisk Gruppeberegning
-            var allocatedGroupEnum = CalculateSubsidyGroup(newMember.DateOfBirth);
+            var allocatedGroupEnum = CalculateSubsidyGroup(newRunner.DateOfBirth);
 
             // Konvertering til database INT Primary Key.
             var allocatedGroupID = (int)allocatedGroupEnum;
-            newMember.SetSubsidyGroup(allocatedGroupID);
+            newRunner.SetSubsidyGroup(allocatedGroupID);
 
-            var createdMember = _repository.Add(newMember);
+            var createdRunner = _repository.Add(newRunner);
 
             //Simulation af Bekræftelse/Mail
-            Console.WriteLine($"Bekræftelse sendt til {createdMember.Email ?? "ingen email"}. Tildelt tilskudsgruppe ID: {createdMember.SubsidyGroupID}");
+            Console.WriteLine($"Bekræftelse sendt til {createdRunner.Email ?? "ingen email"}. Tildelt tilskudsgruppe ID: {createdRunner.SubsidyGroupID}");
 
-            return createdMember;
+            return createdRunner;
         }
 
-        private ObservableCollection<Member> _members { get; set; } = new ObservableCollection<Member>();
-        public ObservableCollection<Member> Members
+        private ObservableCollection<Runner> _runners { get; set; } = new ObservableCollection<Runner>();
+        public ObservableCollection<Runner> Runners
         {
-            get { return _members; }
-            set { _members = value; }
+            get { return _runners; }
+            set { _runners = value; }
         }
 
 

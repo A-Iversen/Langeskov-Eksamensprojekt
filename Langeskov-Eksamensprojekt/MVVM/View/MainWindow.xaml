@@ -93,7 +93,7 @@
                 <StackPanel Orientation="Horizontal">
                     
                     <RadioButton Style="{StaticResource menuButton}" IsChecked="True"
-                                 Command="{Binding ShowMemberViewCommand}">
+                                 Command="{Binding ShowRunnerViewCommand}">
                         
                         <Viewbox Width="50" Height="100" VerticalAlignment="Bottom"> 
                             <Path Style="{StaticResource IconUsers}"
