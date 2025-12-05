@@ -12,8 +12,8 @@
                 <ControlTemplate TargetType="TextBox">
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="20"/>
                         </Grid.ColumnDefinitions>
 
                         <Border Background="{StaticResource bgDark}" Grid.ColumnSpan="2" CornerRadius="15"/>

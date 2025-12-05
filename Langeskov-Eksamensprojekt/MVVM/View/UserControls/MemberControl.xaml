@@ -35,21 +35,21 @@
                          Margin="5,20,0,0" Width="90"/>
                 </StackPanel>
 
-                <ComboBox Margin="0,20,0,0"
-                          Height="30"
-                          Width="auto">
+                <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
+                          Margin="0,20,0,0" Width="auto"
+                          >
+
                 </ComboBox>
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
                          Text="{Binding Placeholder}"
-                         Margin="0,20,0,0" Width="100"/>
+                         Margin="0,20,0,0" Width="120"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
                          Text="{Binding Placeholder}"
-                         Margin="5,20,0,0" Width="80"/>
+                         Margin="5,20,0,0" Width="60"/>
                 </StackPanel>
-
 
                 <TextBox Style="{StaticResource textBox}" Tag="Email"
                          Text="{Binding Placeholder}"
@@ -63,12 +63,11 @@
                          HorizontalAlignment="Left"
                          Width="185"/>
 
-                <DatePicker
-                            Margin="0,20,0,0">
+                <DatePicker Margin="0,20,0,0">
 
                 </DatePicker>
 
-                <Button Height="35"
+                <Button Style="{DynamicResource confirmationButton}" Height="35"
                         Width="140"
                         Margin="0,190,0,0"
                         Content="Tilføj Bruger">
@@ -85,7 +84,10 @@
         <!--Middle Buttons-->
         <RadioButton Style="{StaticResource addButton}"
                      Grid.Column="1" Grid.Row="1"
-                     VerticalAlignment="Top">
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,0,0"
+                     Panel.ZIndex="1">
             
             <Viewbox Width="20" Height="17" VerticalAlignment="Top"
                      Margin="0,5,3,0">
@@ -97,7 +99,8 @@
         <Button Style="{StaticResource removeButton}"
                 Grid.Column="1" Grid.Row="1"
                 VerticalAlignment="Bottom"
-                Margin="0,0,0,15"
+                HorizontalAlignment="Left"
+                Margin="5,0,0,15"
                 IsEnabled="{Binding SelectedItem, ElementName=memberDataGrid}">
 
             <Viewbox Width="20" Height="17" VerticalAlignment="Top"
@@ -117,7 +120,7 @@
                       Style="{StaticResource DataGridStyle1}" 
                       CanUserAddRows="True"
                       HorizontalAlignment="Left"
-                      Width="auto"
+                      Width="760" 
                         
                       Margin="3,15,0,0" ItemsSource="{Binding Members}"
                       AutoGenerateColumns="False"
