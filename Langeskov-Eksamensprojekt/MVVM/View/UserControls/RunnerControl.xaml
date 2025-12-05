@@ -155,7 +155,7 @@
                                         MinWidth="120"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth}" 
+                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}'}" 
                                         Width="110"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
                 </DataGrid.Columns>
