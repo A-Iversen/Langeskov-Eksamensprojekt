@@ -56,7 +56,6 @@ CREATE TABLE Runner (
     CONSTRAINT FK_Runner_RunnerGroup 
         FOREIGN KEY (RunnerGroupID) REFERENCES RunnerGroup(RunnerGroupID)
 );
-GO
 
 -- SEED RUNNERS (Ekempler p forskellige medlemmer)
 

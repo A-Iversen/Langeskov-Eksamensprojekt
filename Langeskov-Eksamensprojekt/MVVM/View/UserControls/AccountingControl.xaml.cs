@@ -19,8 +19,8 @@ namespace MVVM.View.UserControls
 
             string connectionString = config.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("FEJL: Connection string 'DefaultConnection' blev ikke fundet i appsettings.json.");
 
-            IMemberGroupRepository memberGroupRepository = new SQLMemberGroupRepository(connectionString);
-            DataContext = new AccountingViewModel(memberGroupRepository);
+            IRunnerGroupRepository runnerGroupRepository = new SQLRunnerGroupRepository(connectionString);
+            DataContext = new AccountingViewModel(runnerGroupRepository);
         }
     }
 }

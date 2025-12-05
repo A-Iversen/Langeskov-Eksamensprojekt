@@ -57,8 +57,8 @@ namespace Infrastructure
         {
             try
             {
-                // Tjekker om hovedtabellen 'Member' findes
-                string query = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Member'";
+                // Tjekker om hovedtabellen 'Runner' findes
+                string query = "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Runner'";
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -66,7 +66,7 @@ namespace Infrastructure
                     connection.Open();
                     int tableCount = (int)command.ExecuteScalar();
 
-                    // Hvis Member-tabellen ikke findes, er databasen tom/ny
+                    // Hvis Runner-tabellen ikke findes, er databasen tom/ny
                     return tableCount == 0;
                 }
             }
