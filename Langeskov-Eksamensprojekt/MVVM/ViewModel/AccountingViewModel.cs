@@ -7,20 +7,20 @@ namespace MVVM.ViewModel
 {
     class AccountingViewModel
     {
-        private readonly IRunnerGroupRepository _memberGroupRepository;
+        private readonly IRunnerGroupRepository _runnerGroupRepository;
 
-        public IEnumerable<RunnerGroup> MemberGroups { get; private set; }
+        public IEnumerable<RunnerGroup> RunnerGroups { get; private set; }
 
-        public AccountingViewModel(IRunnerGroupRepository memberGroupRepository)
+        public AccountingViewModel(IRunnerGroupRepository runnerGroupRepository)
         {
-            _memberGroupRepository = memberGroupRepository;
-            MemberGroups = new List<RunnerGroup>(); // Initialize with an empty list
+            _runnerGroupRepository = runnerGroupRepository;
+            RunnerGroups = new List<RunnerGroup>(); // Initialize with an empty list
             LoadMemberGroups();
         }
 
         private void LoadMemberGroups()
         {
-            MemberGroups = _memberGroupRepository.GetAll();
+            RunnerGroups = _runnerGroupRepository.GetAll();
         }
     }
 }
