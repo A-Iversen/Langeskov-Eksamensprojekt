@@ -19,8 +19,10 @@ namespace Infrastructure.Model
         // FK fra MemberGroup - bruger nu integer ID i stedet for string navn
         public int RunnerGroupID { get; private set; }
 
+        //
         public Runner() { }
 
+        //
         public Runner(string name, string? email, string? address, string? postalCode, string? phoneNumber, string? gender, DateTime dateOfBirth, int runnerGroupID)
         {
             Name = name;

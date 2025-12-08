@@ -27,12 +27,12 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Fornavn"
-                         Text="{Binding Placeholder}"
+                         Text="{Binding FirstName}"
                          Margin="0,20,0,0" Width="90"
                          BorderThickness="1.3,1.8,1.3,1"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Efternavn"
-                         Text="{Binding Placeholder}"
+                         Text="{Binding Lastname}"
                          Margin="5,20,0,0" Width="90"
                          BorderThickness="1.3,1.8,1.3,1"/>
                     
@@ -46,11 +46,11 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
-                         Text="{Binding Placeholder}"
+                         Text="{Binding Adress}"
                          Margin="0,20,0,0" Width="120"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
-                         Text="{Binding Placeholder}"
+                         Text="{Binding PostalCode}"
                          Margin="5,20,0,0" Width="60"/>
                 </StackPanel>
 
