@@ -171,7 +171,7 @@
                                         
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridComboBoxColumn Header="Subsidy" Binding="{Binding SubsidyGroupID}" 
+                    <DataGridComboBoxColumn Header="Subsidy" SelectedValueBinding="{Binding SubsidyGroupName}" 
                                             Width="80" />
                     
 
