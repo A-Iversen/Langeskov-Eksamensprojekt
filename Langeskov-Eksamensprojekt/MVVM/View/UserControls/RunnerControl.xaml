@@ -22,27 +22,22 @@
         <Border Grid.Column="0" Grid.RowSpan="2"
                 CornerRadius="0,20,20,20" d:Background="{StaticResource bg}">
 
-            <StackPanel Margin="5,20,0,0"
+            <StackPanel Margin="5,15,0,0"
                         HorizontalAlignment="Left">
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Style="{StaticResource textBox}" Tag="Fornavn"
-                         Text="{Binding FirstName}"
-                         Margin="0,20,0,0" Width="90"
-                         BorderThickness="1.3,1.8,1.3,1"/>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <TextBox Style="{StaticResource textBox}" Tag="Fulde Navn"
+                         Text="{Binding Name}"
+                         Margin="0,15,3,-5" Width="130"/>
 
-                    <TextBox Style="{StaticResource textBox}" Tag="Efternavn"
-                         Text="{Binding Lastname}"
-                         Margin="5,20,0,0" Width="90"
-                         BorderThickness="1.3,1.8,1.3,1"/>
+                    <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
+                              Margin="0,20,0,0" Width="54"/>
                     
                 </StackPanel>
 
-                <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
-                          Margin="0,20,0,0" Width="auto"
-                          >
 
-                </ComboBox>
+
+
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
