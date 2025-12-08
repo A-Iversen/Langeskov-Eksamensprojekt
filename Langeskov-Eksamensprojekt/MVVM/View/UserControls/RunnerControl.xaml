@@ -28,11 +28,14 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Fornavn"
                          Text="{Binding Placeholder}"
-                         Margin="0,20,0,0" Width="90"/>
+                         Margin="0,20,0,0" Width="90"
+                         BorderThickness="1.3,1.8,1.3,1"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Efternavn"
                          Text="{Binding Placeholder}"
-                         Margin="5,20,0,0" Width="90"/>
+                         Margin="5,20,0,0" Width="90"
+                         BorderThickness="1.3,1.8,1.3,1"/>
+                    
                 </StackPanel>
 
                 <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
@@ -63,13 +66,21 @@
                          HorizontalAlignment="Left"
                          Width="185"/>
 
-                <DatePicker Margin="0,20,0,0">
+                <Calendar Style="{StaticResource CalendarStyle1}"
+                          CalendarButtonStyle="{StaticResource CalendarButtonStyle1}" 
+                          CalendarDayButtonStyle="{StaticResource CalendarDayButtonStyle1}" 
+                          CalendarItemStyle="{StaticResource CalendarItemStyle1}"
+                          Margin="0,20,0,0"
+                          HorizontalAlignment="Left"
+                          BorderThickness="1,1,1,2.3"
+                          />
 
-                </DatePicker>
+
+
 
                 <Button Style="{DynamicResource confirmationButton}" Height="35"
-                        Width="140"
-                        Margin="0,190,0,0"
+                        Width="160"
+                        Margin="0,20,0,0"
                         Content="Tilføj Bruger">
                     
                 </Button>
@@ -156,8 +167,15 @@
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}'}" 
-                                        Width="110"
+                                        Width="1"
+                                        
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+
+                    <DataGridComboBoxColumn Header="Subsidy" Binding="{Binding SubsidyGroupID}" 
+                                            Width="80" />
+                    
+
+                    
                 </DataGrid.Columns>
             </DataGrid>
 

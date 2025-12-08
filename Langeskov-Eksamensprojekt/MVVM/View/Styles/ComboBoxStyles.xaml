@@ -58,8 +58,8 @@
     <Style x:Key="ComboBoxStyle1" TargetType="{x:Type ComboBox}">
         <Setter Property="Foreground" Value="{StaticResource textMuted}"/>
         <Setter Property="Background" Value="{StaticResource bg}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource textMuted}"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource text}"/>
+        <Setter Property="BorderThickness" Value="1.2"/>
         <Setter Property="Height" Value="35"/>
         <Setter Property="Padding" Value="15,0,0,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
