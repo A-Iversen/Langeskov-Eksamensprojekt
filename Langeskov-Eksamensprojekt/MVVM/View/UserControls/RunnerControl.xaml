@@ -31,8 +31,13 @@
                          Margin="0,15,3,-5" Width="130"/>
 
                     <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
-                              Margin="0,20,0,0" Width="54"/>
-                    
+                              SelectedItem="{Binding Gender}" Margin="0,20,0,0" Width="54">
+                        <ComboBoxItem Content="Han"/>
+                        <ComboBoxItem Content="Hun"/>
+                        <ComboBoxItem Content="Andet"/>
+                    </ComboBox>
+
+
                 </StackPanel>
 
 
@@ -41,7 +46,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
-                         Text="{Binding Adress}"
+                         Text="{Binding Address}"
                          Margin="0,20,0,0" Width="120"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
@@ -50,13 +55,13 @@
                 </StackPanel>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Email"
-                         Text="{Binding Placeholder}"
+                         Text="{Binding Email}"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"/>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Telefon"
-                         Text="{Binding Placeholder}"
+                         Text="{Binding PhoneNumber}"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"/>
