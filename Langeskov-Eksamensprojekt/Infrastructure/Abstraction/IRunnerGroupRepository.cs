@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Model;
-using Infrastructure.Repository;
 
-namespace Infrastructure.Abstraction
+namespace Infrastructure.Repository
 {
     public interface IRunnerGroupRepository : IRepository<RunnerGroup>
     {

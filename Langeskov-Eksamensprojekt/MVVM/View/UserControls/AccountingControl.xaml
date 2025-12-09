@@ -19,19 +19,37 @@
         <Border Grid.Column="0" Grid.RowSpan="2"
                 CornerRadius="0,20,20,20"
                 d:Background="{StaticResource bg}">
-
+            <StackPanel Orientation="Vertical" Margin="0,50,0,0">
+                <Button Content="Runner Groups" Command="{Binding ShowRunnerGroupsCommand}" Style="{StaticResource viewSwitcherButton}"/>
+                <Button Content="Tilskudsoversigt" Command="{Binding ShowSubsidySummaryCommand}" Style="{StaticResource viewSwitcherButton}"/>
+            </StackPanel>
         </Border>
 
         <Border Grid.Column="1" Grid.Row="1"
                 CornerRadius="0,0,20,0"
                 d:Background="{StaticResource bgDark}">
-            <DataGrid ItemsSource="{Binding RunnerGroups}" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Group ID" Binding="{Binding MemberGroupID}" />
-                    <DataGridTextColumn Header="Group Name" Binding="{Binding MemberGroupName}" />
-                    <DataGridTextColumn Header="Subscription Fee" Binding="{Binding SubscriptionFee}" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid>
+                <!-- DataGrid to display a list of runner groups -->
+                <DataGrid ItemsSource="{Binding RunnerGroups}" AutoGenerateColumns="False" Width="300"
+                          Visibility="{Binding RunnerGroupsVisibility}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Gruppe ID" Binding="{Binding MemberGroupID}" />
+                        <DataGridTextColumn Header="Gruppenavn" Binding="{Binding MemberGroupName}" />
+                        <DataGridTextColumn Header="Kontingent" Binding="{Binding SubscriptionFee}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                <!-- ListView to display the summary of runners per subsidy group -->
+                <ListView ItemsSource="{Binding SubsidyGroupSummary}" Margin="10"
+                          Visibility="{Binding SubsidySummaryVisibility}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Tilskuds Gruppe" DisplayMemberBinding="{Binding SubsidyGroupName}" Width="200"/>
+                            <GridViewColumn Header="Antal Løbere" DisplayMemberBinding="{Binding RunnerCount}" Width="150"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

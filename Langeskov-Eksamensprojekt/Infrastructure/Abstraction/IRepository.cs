@@ -1,4 +1,4 @@
-﻿
+﻿    
 namespace Infrastructure.Repository
 {
     public interface IRepository<T> where T : class
@@ -7,7 +7,7 @@ namespace Infrastructure.Repository
         IEnumerable<T> GetAll();
         T? GetById(int id);
 
-        // CRUD: Create (Returnerer den oprettede entitet med tildelt ID fra DB)
+        // CRUD: Create
         T Add(T entity);
 
         // CRUD: Update

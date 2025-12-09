@@ -3,18 +3,20 @@ using Infrastructure.Repository;
 using System;
 using System.Linq;
 using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MVVM.ViewModel
 {
     public class RunnerViewModel
     {
         private readonly IRunnerRepository _repository;
+        private readonly IRunnerGroupRepository? _runnerGroupRepository;
 
         // Den valgte medlemskabstype fra UI - bruger nu integer ID i stedet for string navn
         public int SelectedRunnerGroupID { get; set; }
@@ -28,11 +30,12 @@ namespace MVVM.ViewModel
         public string PostalCode { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public RunnerViewModel(IRunnerRepository repository)
+        public RunnerViewModel(IRunnerRepository repository, IRunnerGroupRepository? runnerGroupRepository = null)
         {
             _repository = repository;
+            _runnerGroupRepository = runnerGroupRepository;
             LoadRunners();
-
+            LoadRunnerGroups();
         }
 
         private void LoadRunners()
@@ -42,6 +45,17 @@ namespace MVVM.ViewModel
             foreach (var runner in runners)
             {
                 _runners.Add(runner);
+            }
+        }
+
+        private void LoadRunnerGroups()
+        {
+            _runnerGroups.Clear();
+            if (_runnerGroupRepository == null) return;
+            var groups = _runnerGroupRepository.GetAll();
+            foreach (var g in groups)
+            {
+                _runnerGroups.Add(g);
             }
         }
 
@@ -109,8 +123,11 @@ namespace MVVM.ViewModel
             set { _runners = value; }
         }
 
-
-
-
+        private ObservableCollection<RunnerGroup> _runnerGroups { get; set; } = new ObservableCollection<RunnerGroup>();
+        public ObservableCollection<RunnerGroup> RunnerGroups
+        {
+            get { return _runnerGroups; }
+            set { _runnerGroups = value; }
+        }
     }
 }

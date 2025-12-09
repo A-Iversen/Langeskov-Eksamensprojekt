@@ -171,10 +171,12 @@
                                         
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridComboBoxColumn Header="Subsidy" SelectedValueBinding="{Binding SubsidyGroupName}" 
-                                            Width="80" />
-                    
-
+                        <DataGridComboBoxColumn Header="BetalingsGruppe"
+                                        Width="80"
+                                        ItemsSource="{Binding DataContext.RunnerGroups, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        DisplayMemberPath="RunnerGroupName"
+                                        SelectedValuePath="RunnerGroupID"
+                                        SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     
                 </DataGrid.Columns>
             </DataGrid>

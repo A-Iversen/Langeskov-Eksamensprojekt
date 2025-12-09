@@ -112,6 +112,39 @@
 
     
     
+    <Style x:Key="viewSwitcherButton" TargetType="Button">
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="{StaticResource bgDark}"/>
+        <Setter Property="Foreground" Value="{StaticResource text}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="10,0,0,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,5,10,5"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="5"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource highlight}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource companyPrimary}"/>
+                <Setter Property="BorderThickness" Value="2"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.5"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
     <!--Delete & Add Buttons-->
     <Style x:Key="addButton" TargetType="RadioButton">
         <Setter Property="Width" Value="auto"/>

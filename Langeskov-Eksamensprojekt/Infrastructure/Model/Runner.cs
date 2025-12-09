@@ -16,8 +16,8 @@ namespace Infrastructure.Model
         // FK fra SubsidyGroup
         public int SubsidyGroupID { get; private set; }
 
-        // FK fra MemberGroup - bruger nu integer ID i stedet for string navn
-        public int RunnerGroupID { get; private set; }
+        // FK fra MemberGroup - make setter public so WPF can two-way bind SelectedValue to this property
+        public int RunnerGroupID { get; set; }
 
         //
         public Runner() { }
@@ -41,7 +41,7 @@ namespace Infrastructure.Model
             SubsidyGroupID = groupID;
         }
 
-        // bruges af Repository til at sætte MemberGroupID fra database
+        // bruges af Repository til at sætte MemberGroupID fra database (keeps compatibility)
         public void SetRunnerGroupID(int runnerGroupID)
         {
             RunnerGroupID = runnerGroupID;
