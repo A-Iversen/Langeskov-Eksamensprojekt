@@ -11,32 +11,31 @@
                 <ColumnDefinition Width="33" />
             </Grid.ColumnDefinitions>
 
-
-
-            <Border x:Name="Border" 
+            <Border Name="Border" 
                     Grid.ColumnSpan="2"
                     CornerRadius="16"
                     Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}" >
+                    BorderThickness="{TemplateBinding BorderThickness}">
 
-                <Label Content="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=ComboBox}}"
+                <Label Name="Label" Content="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=ComboBox}}"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
-                       Margin="5,0,0,0"/>
+                       Margin="5,0,0,0"
+                       Visibility="Hidden"/>
 
             </Border>
 
-            <Path x:Name="Arrow" 
+            <Path Name="Arrow" 
+                  Style="{StaticResource IconSortDown}"
                   Grid.Column="1" 
-                  HorizontalAlignment="Center" 
+                  HorizontalAlignment="Right" 
                   VerticalAlignment="Center"
-                  Data="M0,0 L5,5 L10,0 Z"
                   Fill="{StaticResource textMuted}"
-                  Stretch="None">
-                <Path.RenderTransform>
-                    <ScaleTransform ScaleY="1"/>
-                </Path.RenderTransform>
+                  Stretch="Uniform"
+                  Margin="0,2,6,0"
+                  Width="11">
+
             </Path>
         </Grid>
         <ControlTemplate.Triggers>
@@ -50,6 +49,14 @@
                 
                 <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource info}" />
             </Trigger>
+
+            <DataTrigger Value="{x:Null}">
+                <DataTrigger.Binding>
+                    <Binding Path="SelectedItem" RelativeSource="{RelativeSource AncestorType=ComboBox}" />
+                </DataTrigger.Binding>
+                <Setter TargetName="Label" Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+
         </ControlTemplate.Triggers>
     </ControlTemplate>
     
@@ -61,7 +68,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource text}"/>
         <Setter Property="BorderThickness" Value="1.2"/>
         <Setter Property="Height" Value="35"/>
-        <Setter Property="Padding" Value="15,0,0,0"/>
+        <Setter Property="Padding" Value="10,0,0,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -106,12 +113,12 @@
                                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
                               
                                 <Border x:Name="DropDownBorder" 
-                                        CornerRadius="0,0,20,20" 
+                                        CornerRadius="0,0,18,18" 
                                         BorderThickness="1,0,1,1" 
                                         Background="{StaticResource bg}" 
                                         BorderBrush="{StaticResource textMuted}"
                                         Margin="0,0,0,0">
-                                    <ScrollViewer Margin="2" SnapsToDevicePixels="True">
+                                    <ScrollViewer Margin="2" SnapsToDevicePixels="False">
                                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
                                     </ScrollViewer>
                                 </Border>
@@ -130,11 +137,11 @@
             </Setter.Value>
         </Setter>
         
-        
+        <!--Combobox indhold/items (Enums)-->
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ComboBoxItem">
-                    <Setter Property="Padding" Value="10,5"/>
+                    <Setter Property="Padding" Value="8,2,0,8"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ComboBoxItem">
@@ -143,10 +150,10 @@
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="ItemBorder" Property="Background" Value="#E8ECEF"/>
+                                        <Setter Property="Foreground" Value="{StaticResource info}"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="ItemBorder" Property="Background" Value="#DCE0E5"/>
+                                        <Setter Property="Foreground" Value="Blue"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

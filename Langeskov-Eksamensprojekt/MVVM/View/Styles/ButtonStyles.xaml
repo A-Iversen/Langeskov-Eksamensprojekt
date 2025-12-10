@@ -32,7 +32,7 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Height" Value="150"/>
                 <Setter Property="Margin" Value="50,0,0,0"/>
-                <Setter Property="BorderBrush" Value="{StaticResource companyPrimary}"/>
+                <Setter Property="BorderBrush" Value="{Binding Path=Foreground, RelativeSource={RelativeSource Self}}"/>
                 <Setter Property="Background" Value="{StaticResource bgDark}"/>
             </Trigger>
         </Style.Triggers>
@@ -73,7 +73,10 @@
         <Setter Property="BorderBrush" Value="{StaticResource text}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="BorderThickness" Value="1,0.6,1,1.4"/>
+        
         <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="13"/>
+
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="0"/>
@@ -100,6 +103,7 @@
                             <Setter Property="BorderBrush" Value="{StaticResource success}"/>
                             <Setter Property="Foreground" Value="{StaticResource success}"/>
                             <Setter Property="BorderThickness" Value="2,1.6,2,2.4"/>
+                            <Setter Property="FontSize" Value="12.5"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="DarkSlateGray"/>
@@ -110,8 +114,6 @@
         </Setter>
     </Style>
 
-    
-    
     <Style x:Key="viewSwitcherButton" TargetType="Button">
         <Setter Property="Height" Value="40"/>
         <Setter Property="Background" Value="{StaticResource bgDark}"/>
@@ -212,10 +214,6 @@
         </Setter>
     </Style>
 
-    
-    
-    
-    
     <Style x:Key="removeButton" TargetType="Button">
         <Setter Property="Width" Value="auto"/>
         <Setter Property="Height" Value="auto"/>

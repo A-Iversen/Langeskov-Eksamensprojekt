@@ -45,20 +45,22 @@
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 
                                  <!--Sort Knapper-->
-                                <StackPanel Grid.Column="1" Orientation="Horizontal"
-                                            Margin="0,0,10,0" >
-                                    <Path x:Name="SortUpButton"
-                                          Style="{StaticResource IconSortUp}"
-                                          Height="{TemplateBinding FontSize}"
-                                          Fill="Transparent"
-                                          Stretch="Uniform"
-                                          Width="10"/>
+                                <StackPanel Grid.Column="1" Orientation="Vertical"
+                                            Margin="0,0,5,0" VerticalAlignment="Center">
                                     <Path x:Name="SortDownButton"
                                           Style="{StaticResource IconSortDown}"
-                                          Height="{TemplateBinding FontSize}"
+                                          Height="6.4"
                                           Fill="Transparent"
                                           Stretch="Uniform"
-                                          Width="10"/>
+                                          />                                    
+                                    <Path x:Name="SortUpButton"
+                                          Style="{StaticResource IconSortUp}"
+                                          Height="6.2"
+                                          Fill="Transparent"
+                                          Stretch="Uniform"
+                                          
+                                          Margin="-6,0,0,0"/>
+
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -251,8 +253,7 @@
                                 <Thumb>
                                     <Thumb.Template>
                                         <ControlTemplate TargetType="Thumb">
-                                            <Border Background="{StaticResource textMuted}" CornerRadius="5"
-                                                    />
+                                            <Border Background="{StaticResource textMuted}" CornerRadius="5"/>
                                         </ControlTemplate>
                                     </Thumb.Template>
                                 </Thumb>

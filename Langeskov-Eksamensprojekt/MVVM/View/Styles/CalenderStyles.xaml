@@ -7,28 +7,36 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{StaticResource text}"/>
         <Setter Property="Width" Value="185"/>
+        <Setter Property="Focusable" Value="False"/>
+        
 
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Calendar}">
-                    <StackPanel x:Name="PART_Root" HorizontalAlignment="Center">
-                        <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Style="{TemplateBinding CalendarItemStyle}"/>
+                    <StackPanel x:Name="PART_Root" 
+                                HorizontalAlignment="Center">
+                        <CalendarItem x:Name="PART_CalendarItem" 
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}" 
+                                      BorderThickness="{TemplateBinding BorderThickness}" 
+                                      Style="{TemplateBinding CalendarItemStyle}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     
-    
+    <!--Calender Header Knapper + Body-->
     <Style x:Key="CalendarItemStyle1" TargetType="{x:Type CalendarItem}">
-        <Setter Property="Margin" Value="0,3,0,3"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarItem}">
                     <ControlTemplate.Resources>
+                        <!--header: M T W T F S S-->
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
-                            <TextBlock Foreground="#FF333333" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" Margin="0,6,0,6" Text="{Binding}" VerticalAlignment="Center"/>
+                            <TextBlock Foreground="{StaticResource text}" FontFamily="Trebuchet MS" FontWeight="Bold" FontSize="9.5" HorizontalAlignment="Center" Margin="0,6,0,6" Text="{Binding}" VerticalAlignment="Center"/>
                         </DataTemplate>
                     </ControlTemplate.Resources>
                     <Grid x:Name="PART_Root">
@@ -56,7 +64,8 @@
                                     <ControlTemplate x:Key="PreviousButtonTemplate" TargetType="{x:Type Button}">
                                         <Border Cursor="Hand"
                                                 CornerRadius="5"
-                                                Background="Transparent">
+                                                Background="Transparent"
+                                                Margin="0,4,0,0">
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
                                                     <VisualState x:Name="Normal"/>
@@ -82,7 +91,8 @@
                                     <ControlTemplate x:Key="NextButtonTemplate" TargetType="{x:Type Button}">
                                         <Border Cursor="Hand"
                                                 CornerRadius="5"
-                                                Background="Transparent">
+                                                Background="Transparent"
+                                                Margin="0,4,0,0">
                                             <VisualStateManager.VisualStateGroups>
                                                 <VisualStateGroup x:Name="CommonStates">
                                                     <VisualState x:Name="Normal"/>
@@ -123,19 +133,35 @@
                                                     </VisualState>
                                                 </VisualStateGroup>
                                             </VisualStateManager.VisualStateGroups>
+                                        <Grid>
+                                        </Grid>
                                             <ContentPresenter x:Name="buttonContent" 
                                                               ContentTemplate="{TemplateBinding ContentTemplate}" 
                                                               Content="{TemplateBinding Content}" 
                                                               TextElement.Foreground="{StaticResource text}" 
-                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                              Margin="1,4,1,9"
-                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                              HorizontalAlignment="Left"
+                                                              Margin="2,4,1,6"
+                                                              VerticalAlignment="Center"
+                                                              />
+
+                                            <Label Name="Label" Content="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=Calendar}}"
+                                                   Margin="-2,-1,0,0" FontSize="12" FontWeight="Regular" 
+                                                   Foreground="{StaticResource textMuted}"  Background="{StaticResource bg}"
+                                                   Opacity="0">
+                                            </Label>
                                         </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="Content" Value="2020-2029">
+                                                <!--<Setter TargetName="buttonContent" Property="Content" Value="Fødselsdato"/>-->
+                                                <Setter TargetName="Label" Property="Opacity" Value="100"/>
+                                            </Trigger>
+                                            
+                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="125"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="70"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -172,7 +198,7 @@
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                 </Grid>
-                                <Grid x:Name="PART_YearView" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="6,-3,7,6" Grid.Row="1" Visibility="Hidden">
+                                <Grid x:Name="PART_YearView" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="6,5,6,6" Grid.Row="1" Visibility="Hidden">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
@@ -207,13 +233,14 @@
         </Setter>
     </Style>
     
-    <!--Day Items Knapper-->
+    <!--Day datoer Knapper-->
     <Style x:Key="CalendarDayButtonStyle1" TargetType="{x:Type CalendarDayButton}">
         <Setter Property="MinWidth" Value="23"/>
         <Setter Property="MinHeight" Value="20"/>
-        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarDayButton}">
@@ -254,27 +281,7 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="CalendarButtonFocusStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0"/>
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="CalendarButtonfocused">
-                                    <Storyboard>
-                                        <ColorAnimation Duration="0" Storyboard.TargetName="NormalText" To="#0078D7" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"/>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="CalendarButtonUnfocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetName="DayButtonFocusVisual" Storyboard.TargetProperty="Visibility">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Collapsed</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
+                           
                             <VisualStateGroup x:Name="ActiveStates">
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition GeneratedDuration="0"/>
@@ -316,21 +323,22 @@
                         <Rectangle x:Name="HighlightBackground" Stroke="{StaticResource info}" StrokeThickness="1" Opacity="0" RadiusX="7" RadiusY="7"/>
                         <ContentPresenter x:Name="NormalText" TextElement.Foreground="#FF333333" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="5,1,5,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         <Path x:Name="Blackout" Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z" Fill="#FF000000" HorizontalAlignment="Stretch" Margin="3" Opacity="0" RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Stretch"/>
-                        <Rectangle x:Name="DayButtonFocusVisual" IsHitTestVisible="false" RadiusX="1" RadiusY="1" Stroke="#FF45D6FA" Visibility="Collapsed"/>
+                        <Rectangle x:Name="DayButtonFocusVisual" IsHitTestVisible="false" RadiusX="1" RadiusY="1" Stroke="Transparent" Visibility="Collapsed"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     
-    <!--Month/Year Items Knapper-->
+    <!--Month og Year datoer Knapper-->
     <Style x:Key="CalendarButtonStyle1" TargetType="{x:Type CalendarButton}">
         <Setter Property="Background" Value="#FFBADDE9"/>
         <Setter Property="MinWidth" Value="40"/>
         <Setter Property="MinHeight" Value="42"/>
-        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarButton}">
@@ -386,7 +394,7 @@
                         <Rectangle x:Name="SelectedBackground" Fill="Transparent" Opacity="0" RadiusX="1" RadiusY="1"/>
                         <Rectangle x:Name="Background" Fill="Transparent" Stroke="{StaticResource info}" StrokeThickness="1" Opacity="0" RadiusX="8" RadiusY="8"/>
                         <ContentPresenter x:Name="NormalText" TextElement.Foreground="#FF333333" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1,0,1,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        <Rectangle x:Name="CalendarButtonFocusVisual" IsHitTestVisible="false" RadiusX="1" RadiusY="1" Stroke="#FF45D6FA" Visibility="Collapsed"/>
+                        <Rectangle x:Name="CalendarButtonFocusVisual" IsHitTestVisible="false" RadiusX="1" RadiusY="1" Stroke="Transparent" Visibility="Collapsed"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">

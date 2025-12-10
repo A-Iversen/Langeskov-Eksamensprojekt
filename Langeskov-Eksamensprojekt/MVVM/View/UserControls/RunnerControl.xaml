@@ -34,7 +34,6 @@
                               SelectedItem="{Binding Gender}" Margin="0,20,0,0" Width="54">
                         <ComboBoxItem Content="Han"/>
                         <ComboBoxItem Content="Hun"/>
-                        <ComboBoxItem Content="Andet"/>
                     </ComboBox>
 
 
@@ -73,6 +72,9 @@
                           Margin="0,20,0,0"
                           HorizontalAlignment="Left"
                           BorderThickness="1,1,1,2.3"
+                          DisplayMode="Decade"
+                          Tag="Fødselsdato"
+                          
                           />
 
 
@@ -80,7 +82,7 @@
 
                 <Button Style="{DynamicResource confirmationButton}" Height="35"
                         Width="160"
-                        Margin="0,20,0,0"
+                        Margin="0,30,0,0"
                         Content="Tilføj Bruger">
                     
                 </Button>
@@ -130,16 +132,14 @@
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
                       Style="{StaticResource DataGridStyle1}" 
                       CanUserAddRows="True"
-                      HorizontalAlignment="Left"
-                      Width="760" 
-                        
+                      HorizontalAlignment="Stretch"
                       Margin="3,15,0,0" ItemsSource="{Binding Runners}"
                       AutoGenerateColumns="False"
-                      CanUserResizeColumns="False">
+                      CanUserResizeColumns="True">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding RunnerID}"
-                                        MinWidth="55"
+                                        MinWidth="42"
                                         IsReadOnly="True"/>
 
                     <DataGridTextColumn Header="Navn" Binding="{Binding Name}"
@@ -147,7 +147,7 @@
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Køn" Binding="{Binding Gender}"
-                                        MinWidth="65"
+                                        MinWidth="52"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Addresse" Binding="{Binding Address}" 
@@ -155,11 +155,11 @@
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode}" 
-                                        MinWidth="85"
+                                        MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" 
-                                        MinWidth="85"
+                                        MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Email" Binding="{Binding Email}" 

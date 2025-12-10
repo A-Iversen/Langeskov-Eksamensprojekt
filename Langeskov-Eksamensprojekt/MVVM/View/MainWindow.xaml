@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1000"
+        Title="MainWindow" 
+        Height="650" Width="1000"
+        MinHeight="500" MinWidth="800"
         Background="Transparent"
         AllowsTransparency="True"
-        WindowStyle="None">
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        WindowChrome.ResizeGripDirection="Bottom">
 
-    <Border Background="{StaticResource bgDark}" CornerRadius="20,20,20,20"
-             Padding="3,0,4,5">
+    <Border x:Name="MainWindowBackgroundBorder" Background="{StaticResource bgDark}" CornerRadius="20,20,20,20"
+             Padding="3,0,6,6">
 
         
         <Grid Background="Transparent">
@@ -52,7 +56,7 @@
 
             <Border Background="{StaticResource companyPrimary}"
                     Grid.Column="1" Grid.ColumnSpan="2"
-                    CornerRadius="0,10,10,40" >
+                    CornerRadius="0,10,10,30" >
                 
                 <Border.Effect>
                     <DropShadowEffect Direction="-90" Opacity="0.25" 
@@ -61,7 +65,8 @@
                 </Border.Effect>                     
             </Border>
 
-            <Border Background="{StaticResource companyPrimary}" CornerRadius="20,0,39,10" 
+            <Border x:Name="MainWindowLogoBorder" Background="{StaticResource companyPrimary}" 
+                    CornerRadius="20,0,39,10" 
                     Grid.RowSpan="2" Grid.ColumnSpan="2"
                     HorizontalAlignment="Left"
                     Margin="-5,0,0,2" Width="100">
@@ -93,20 +98,23 @@
                 <StackPanel Orientation="Horizontal">
                     
                     <RadioButton Style="{StaticResource menuButton}" IsChecked="True"
-                                 Command="{Binding ShowRunnerViewCommand}">
+                                 Command="{Binding ShowRunnerViewCommand}"
+                                 Foreground="{StaticResource companyPrimary}">
                         
                         <Viewbox Width="50" Height="100" VerticalAlignment="Bottom"> 
                             <Path Style="{StaticResource IconUsers}"
-                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+                                  Fill="Black"/>
                         </Viewbox>
                     </RadioButton>
 
                     
                     <RadioButton Style="{StaticResource menuButton}" 
-                                 Command="{Binding ShowAccountingViewCommand}">
+                                 Command="{Binding ShowAccountingViewCommand}"
+                                 Foreground="Green">
 
                         <Viewbox Width="60" Height="110" VerticalAlignment="Bottom">
-                            <Path Style="{StaticResource IconAccounting}" Fill="{StaticResource text}"/>
+                            <Path Style="{StaticResource IconAccounting}" 
+                                  Fill="Black"/>
                         </Viewbox>
                     
                     </RadioButton>
@@ -158,9 +166,32 @@
 
             <ContentControl Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2"
                             Content="{Binding CurrentView}"/>
-        </Grid>      
-        
+
+            
+            <!--Window Resizing Borders-->
+            <Border Name="ResizeBorderTop" Grid.ColumnSpan="99"
+                    Cursor="SizeNS" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="5" Background="Transparent"/>
+            <Border Name="ResizeBorderBottom" Grid.Row="99" Grid.ColumnSpan="99" Margin="0,0,0,-6"
+                    Cursor="SizeNS" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="5" Background="Transparent"/>
+            <Border Name="ResizeBorderLeft" Grid.RowSpan="99" Margin="-3,0,0,0"
+                    Cursor="SizeWE" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="5" Background="Transparent"/>
+            <Border Name="ResizeBorderRight" Grid.RowSpan="99" Grid.Column="99" Margin="0,0,-6,0"
+                    Cursor="SizeWE" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Stretch" HorizontalAlignment="Right" Width="5" Background="Transparent"/>
+
+            <Border Name="ResizeBorderTopLeft" Margin="-3,0,0,0"
+                    Cursor="SizeNWSE" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Top" HorizontalAlignment="Left" Width="12" Height="12" Background="Transparent"/>
+            <Border Name="ResizeBorderTopRight" Grid.Column="99" Margin="0,0,-6,0"
+                    Cursor="SizeNESW" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Top" HorizontalAlignment="Right" Width="12" Height="12" Background="Transparent"/>
+            <Border Name="ResizeBorderBottomLeft" Grid.Row="99" Margin="-3,0,0,-6"
+                    Cursor="SizeNESW" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="12" Height="12" Background="Transparent"/>
+            <Border Name="ResizeBorderBottomRight" Grid.Column="99" Grid.Row="99"
+                    Cursor="SizeNWSE" MouseLeftButtonDown="ResizeBorderTop_MouseLeftButtonDown" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="12" Height="12" Background="Transparent"/>
+        </Grid>
+
         
         
     </Border>
+
+
+
 </Window>
