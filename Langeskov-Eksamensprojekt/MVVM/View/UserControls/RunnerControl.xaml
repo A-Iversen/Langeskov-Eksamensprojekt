@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MVVM.View.UserControls"
+             xmlns:local="clr-namespace:MVVM.View.UserControls" xmlns:viewmodel="clr-namespace:MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RunnerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="570" d:DesignWidth="1000">
     <Grid>
@@ -36,12 +36,7 @@
                         <ComboBoxItem Content="Hun"/>
                     </ComboBox>
 
-
                 </StackPanel>
-
-
-
-
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
@@ -73,18 +68,15 @@
                           HorizontalAlignment="Left"
                           BorderThickness="1,1,1,2.3"
                           DisplayMode="Decade"
+                          SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"
                           Tag="Fødselsdato"
-                          
                           />
-
-
-
 
                 <Button Style="{DynamicResource confirmationButton}" Height="35"
                         Width="160"
                         Margin="0,30,0,0"
-                        Content="Tilføj Bruger">
-                    
+                        Content="Tilføj Bruger"
+                        Command="{Binding CreateRunnerCommand}">
                 </Button>
 
             </StackPanel>

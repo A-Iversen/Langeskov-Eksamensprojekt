@@ -1,19 +1,23 @@
 ﻿using Infrastructure.Model;
 using Infrastructure.Repository;
+using MVVM.Core;
 using System;
-using System.Linq;
-using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
 
 
 namespace MVVM.ViewModel
 {
-    public class RunnerViewModel
+    public class RunnerViewModel : ViewModelBase
     {
         private readonly IRunnerRepository _repository;
         private readonly IRunnerGroupRepository? _runnerGroupRepository;
@@ -22,22 +26,132 @@ namespace MVVM.ViewModel
         public int SelectedRunnerGroupID { get; set; }
 
         // Properties for dataindtastning (binder til View/UI)
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public DateTime DateOfBirth { get; set; }
-        public string Gender { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public string PostalCode { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
+        private string _name = string.Empty;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _email = string.Empty;
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private DateTime _dateOfBirth;
+        public DateTime DateOfBirth
+        {
+            get => _dateOfBirth;
+            set
+            {
+                if (_dateOfBirth != value)
+                {
+                    _dateOfBirth = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _gender = string.Empty;
+        public string Gender
+        {
+            get => _gender;
+            set
+            {
+                if (_gender != value)
+                {
+                    _gender = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _address = string.Empty;
+        public string Address
+        {
+            get => _address;
+            set
+            {
+                if (_address != value)
+                {
+                    _address = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _postalCode = string.Empty;
+        public string PostalCode
+        {
+            get => _postalCode;
+            set
+            {
+                if (_postalCode != value)
+                {
+                    _postalCode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _phoneNumber = string.Empty;
+        public string PhoneNumber
+        {
+            get => _phoneNumber;
+            set
+            {
+                if (_phoneNumber != value)
+                {
+                    _phoneNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        
 
         public RunnerViewModel(IRunnerRepository repository, IRunnerGroupRepository? runnerGroupRepository = null)
         {
             _repository = repository;
             _runnerGroupRepository = runnerGroupRepository;
+
+            
+            CreateRunnerCommand = new RelayCommand(_ =>
+            {
+                try
+                {
+                    var runner = CreateNewRunner();
+                    Runners.Add(runner); // Optional: show in list
+                    MessageBox.Show($"Bruger '{runner.Name}' blev oprettet.", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Fejl: {ex.Message}", "Oprettelse mislykkedes", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            });
+
             LoadRunners();
             LoadRunnerGroups();
         }
 
+
+        // Indlæs eksisterende medlemmer
         private void LoadRunners()
         {
             var runners = _repository.GetAll();
@@ -86,6 +200,10 @@ namespace MVVM.ViewModel
             return kertemindePostalCodes.Contains(postalCode);
         }
 
+
+        // Kommando til at oprette et nyt medlem
+        public ICommand CreateRunnerCommand { get; }
+
         // Tilmelding af nyt medlem
         public Runner CreateNewRunner()
         {
@@ -99,6 +217,7 @@ namespace MVVM.ViewModel
                 throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
             }
 
+            
             var newRunner = new Runner(name: Name, email: Email, address: Address, postalCode: PostalCode, phoneNumber: PhoneNumber, gender: Gender, dateOfBirth: DateOfBirth, runnerGroupID: SelectedRunnerGroupID);
 
             // Automatisk Gruppeberegning
