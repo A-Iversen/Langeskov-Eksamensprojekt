@@ -55,15 +55,20 @@ namespace Infrastructure.Repository
            return runners;
        }
 
-       // SQL: SELECT * FROM RUNNER WHERE RunnerID = @ID.
-       public Runner? GetById(int id)
+       // Tidligere - SQL: SELECT * FROM RUNNER WHERE RunnerID = @ID.
+       
+       // Nu som Stored Procedure - SQL: EXEC sp_GetRunnerById @RunnerID
+
+        public Runner? GetById(int id)
        {
            Runner? runner = null;
-           string query = "SELECT RunnerID, Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, RunnerGroupID FROM Runner WHERE RunnerID = @RunnerID";
 
            using (SqlConnection connection = new SqlConnection(_connectionString))
            {
-               SqlCommand command = new SqlCommand(query, connection);
+               SqlCommand command = new SqlCommand("sp_GetRunnerById", connection);
+               // Fortæller ADO.NET at det er en stored procedure
+               command.CommandType = System.Data.CommandType.StoredProcedure;
+               
                command.Parameters.AddWithValue("@RunnerID", id);
                connection.Open();
 
