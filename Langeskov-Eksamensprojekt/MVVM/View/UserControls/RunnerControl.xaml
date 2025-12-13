@@ -6,6 +6,11 @@
              xmlns:local="clr-namespace:MVVM.View.UserControls" xmlns:viewmodel="clr-namespace:MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RunnerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="570" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="RunnerGroupsSource" 
+                              Source="{Binding RunnerGroups}" />
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -69,8 +74,7 @@
                           BorderThickness="1,1,1,2.3"
                           DisplayMode="Decade"
                           SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"
-                          Tag="Fødselsdato"
-                          />
+                          Tag="Fødselsdato"/>
 
                 <Button Style="{DynamicResource confirmationButton}" Height="35"
                         Width="160"
@@ -125,10 +129,11 @@
                       Style="{StaticResource DataGridStyle1}" 
                       CanUserAddRows="True"
                       HorizontalAlignment="Stretch"
-                      Margin="3,15,0,0" ItemsSource="{Binding Runners}"
+                      Margin="3,15,0,0" 
                       AutoGenerateColumns="False"
-                      CanUserResizeColumns="True">
-
+                      CanUserResizeColumns="True"
+                      ItemsSource="{Binding Runners}">
+                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding RunnerID}"
                                         MinWidth="42"
@@ -159,20 +164,21 @@
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}'}" 
-                                        Width="1"
-                                        
+                                        MinWidth="80"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                        <DataGridComboBoxColumn Header="BetalingsGruppe"
-                                        Width="80"
-                                        ItemsSource="{Binding DataContext.RunnerGroups, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                        DisplayMemberPath="RunnerGroupName"
-                                        SelectedValuePath="RunnerGroupID"
-                                        SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    
+                    <DataGridComboBoxColumn Header="BetalingsGruppe"
+                                            MinWidth="120"
+                                            ItemsSource="{Binding Source={StaticResource RunnerGroupsSource}}"
+                                            DisplayMemberPath="RunnerGroupName"
+                                            SelectedValuePath="RunnerGroupID"
+                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            EditingElementStyle="{StaticResource DataGridComboBoxStyle}"
+                                            ElementStyle="{StaticResource DataGridComboBoxStyle}">
+                    </DataGridComboBoxColumn>   
+
                 </DataGrid.Columns>
             </DataGrid>
-
         </Border>
     </Grid>
 </UserControl>

@@ -207,15 +207,16 @@ namespace MVVM.ViewModel
         // Tilmelding af nyt medlem
         public Runner CreateNewRunner()
         {
-            if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
-            {
-                throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
-            }
+            //
+            //if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
+            //{
+            //    throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
+            //}
 
-            if (_repository.RunnerExists(Name, DateOfBirth))
-            {
-                throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
-            }
+            //if (_repository.RunnerExists(Name, DateOfBirth))
+            //{
+            //    throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
+            //}
 
             
             var newRunner = new Runner(name: Name, email: Email, address: Address, postalCode: PostalCode, phoneNumber: PhoneNumber, gender: Gender, dateOfBirth: DateOfBirth, runnerGroupID: SelectedRunnerGroupID);
@@ -235,6 +236,7 @@ namespace MVVM.ViewModel
             return createdRunner;
         }
 
+
         private ObservableCollection<Runner> _runners { get; set; } = new ObservableCollection<Runner>();
         public ObservableCollection<Runner> Runners
         {
@@ -248,5 +250,6 @@ namespace MVVM.ViewModel
             get { return _runnerGroups; }
             set { _runnerGroups = value; }
         }
+
     }
 }

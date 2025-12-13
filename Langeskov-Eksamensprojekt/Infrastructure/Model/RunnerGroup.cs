@@ -16,6 +16,16 @@ namespace Infrastructure.Model
         }
 
         public RunnerGroup() { }
+
+
+
+        //For at en Runnergroup kan blive displayed på en datagrids ComboBox skal den konverteres til en string,
+        //ellers ville den istedet sende et objects fulle navn som i dette tilfælde ville være Infrastructure.Model.Runnergroup
+        public override string ToString()
+        {
+            return RunnerGroupName;
+        }
+
     }
 }
 
