@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         
         
-        <!--Left Panel-->
+        <!--Left Create Runner Panel-->
         <Border Grid.Column="0" Grid.RowSpan="2"
                 CornerRadius="0,20,20,20" d:Background="{StaticResource bg}">
 
@@ -33,12 +33,15 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                     <TextBox Style="{StaticResource textBox}" Tag="Fulde Navn"
                          Text="{Binding Name}"
-                         Margin="0,15,3,-5" Width="130"/>
+                         Margin="0,15,5,-5" Width="116"/>
 
                     <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
-                              SelectedItem="{Binding Gender}" Margin="0,20,0,0" Width="54">
-                        <ComboBoxItem Content="Han"/>
-                        <ComboBoxItem Content="Hun"/>
+                              Margin="0,20,0,0" Width="64"
+                              
+                              ItemsSource="{Binding GenderOptions}"
+                              SelectedItem="{Binding Gender}"
+                              SelectedIndex="-1">
+    
                     </ComboBox>
 
                 </StackPanel>

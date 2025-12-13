@@ -153,7 +153,7 @@
                                         <Setter Property="Foreground" Value="{StaticResource info}"/>
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Foreground" Value="Blue"/>
+                                        <Setter Property="Foreground" Value="{StaticResource info}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

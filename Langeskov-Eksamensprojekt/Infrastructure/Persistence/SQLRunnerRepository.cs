@@ -22,7 +22,7 @@ namespace Infrastructure.Repository
                Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address")),
                PostalCode = reader.IsDBNull(reader.GetOrdinal("PostalCode")) ? null : reader.GetString(reader.GetOrdinal("PostalCode")),
                PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber")),
-               Gender = reader.IsDBNull(reader.GetOrdinal("Gender")) ? null : reader.GetString(reader.GetOrdinal("Gender")),
+               Gender = (Gender)Enum.Parse(typeof(Gender), reader.GetString(reader.GetOrdinal("Gender"))),
                DateOfBirth = reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))
            };
            
@@ -100,7 +100,7 @@ namespace Infrastructure.Repository
                command.Parameters.AddWithValue("@Address", (object?)entity.Address ?? DBNull.Value);
                command.Parameters.AddWithValue("@PostalCode", (object?)entity.PostalCode ?? DBNull.Value);
                command.Parameters.AddWithValue("@PhoneNumber", (object?)entity.PhoneNumber ?? DBNull.Value);
-               command.Parameters.AddWithValue("@Gender", (object?)entity.Gender ?? DBNull.Value);
+               command.Parameters.AddWithValue("@Gender", entity.Gender.ToString());
                command.Parameters.AddWithValue("@DateOfBirth", entity.DateOfBirth);
                command.Parameters.AddWithValue("@SubsidyGroupID", entity.SubsidyGroupID);
                command.Parameters.AddWithValue("@RunnerGroupID", entity.RunnerGroupID);

@@ -68,8 +68,8 @@ namespace MVVM.ViewModel
             }
         }
 
-        private string _gender = string.Empty;
-        public string Gender
+        private Gender? _gender;
+        public Gender? Gender
         {
             get => _gender;
             set
@@ -138,7 +138,7 @@ namespace MVVM.ViewModel
             set { _runnerGroups = value; }
         }
 
-
+        public IEnumerable<Gender> GenderOptions => Enum.GetValues(typeof(Gender)).Cast<Gender>();
 
 
         public RunnerViewModel(IRunnerRepository repository, IRunnerGroupRepository? runnerGroupRepository = null)
