@@ -110,7 +110,8 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 Margin="5,0,0,15"
-                IsEnabled="{Binding SelectedItem, ElementName=runnerDataGrid}">
+                IsEnabled="{Binding SelectedItem, ElementName=runnerDataGrid}"
+                Command="{Binding DeleteRunnerCommand}">
 
             <Viewbox Width="20" Height="17" VerticalAlignment="Top"
                      Margin="-5,5,0,0">
@@ -132,7 +133,9 @@
                       Margin="3,15,0,0" 
                       AutoGenerateColumns="False"
                       CanUserResizeColumns="True"
-                      ItemsSource="{Binding Runners}">
+                      
+                      ItemsSource="{Binding Runners}"
+                      SelectedItem="{Binding SelectedRunner}">
                 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding RunnerID}"

@@ -25,7 +25,7 @@ namespace MVVM.ViewModel
         // Den valgte medlemskabstype fra UI - bruger nu integer ID i stedet for string navn
         public int SelectedRunnerGroupID { get; set; }
 
-        // Properties for dataindtastning (binder til View/UI)
+        //Properties & ObservableCollection for dataindtastning (binder til View/UI)
         private string _name = string.Empty;
         public string Name
         {
@@ -124,7 +124,22 @@ namespace MVVM.ViewModel
             }
         }
 
-        
+        private ObservableCollection<Runner> _runners { get; set; } = new ObservableCollection<Runner>();
+        public ObservableCollection<Runner> Runners
+        {
+            get { return _runners; }
+            set { _runners = value; }
+        }
+
+        private ObservableCollection<RunnerGroup> _runnerGroups { get; set; } = new ObservableCollection<RunnerGroup>();
+        public ObservableCollection<RunnerGroup> RunnerGroups
+        {
+            get { return _runnerGroups; }
+            set { _runnerGroups = value; }
+        }
+
+
+
 
         public RunnerViewModel(IRunnerRepository repository, IRunnerGroupRepository? runnerGroupRepository = null)
         {
@@ -237,19 +252,36 @@ namespace MVVM.ViewModel
         }
 
 
-        private ObservableCollection<Runner> _runners { get; set; } = new ObservableCollection<Runner>();
-        public ObservableCollection<Runner> Runners
+
+        //---Sletning af Runner---
+        private Runner _selectedRunner;
+        public Runner SelectedRunner
         {
-            get { return _runners; }
-            set { _runners = value; }
+            get { return _selectedRunner; }
+            set
+            {
+                _selectedRunner = value;
+                OnPropertyChanged();
+            }
         }
 
-        private ObservableCollection<RunnerGroup> _runnerGroups { get; set; } = new ObservableCollection<RunnerGroup>();
-        public ObservableCollection<RunnerGroup> RunnerGroups
-        {
-            get { return _runnerGroups; }
-            set { _runnerGroups = value; }
-        }
+        public ICommand DeleteRunnerCommand => new RelayCommand(execute =>
+        {          
+            if (SelectedRunner == null)
+            {
+                MessageBox.Show("Ingen løber valgt til sletning.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            try
+            {
+                _repository.Delete(SelectedRunner.RunnerID);
+                Runners.Remove(SelectedRunner);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fejl ved sletning: {ex.Message}", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        });
 
     }
 }
