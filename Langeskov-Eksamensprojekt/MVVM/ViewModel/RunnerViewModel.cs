@@ -222,7 +222,7 @@ namespace MVVM.ViewModel
         // Tilmelding af nyt medlem
         public Runner CreateNewRunner()
         {
-            //
+            //Midlertidigt deaktiveret for nemmere testning.
             //if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
             //{
             //    throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
@@ -250,6 +250,28 @@ namespace MVVM.ViewModel
 
             return createdRunner;
         }
+        
+
+
+        //---Editing af Runner---
+        public ICommand UpdateRunnerCommand => new RelayCommand(param =>
+        {
+            var runner = param as Runner ?? SelectedRunner;
+            if (runner == null)
+            {
+                MessageBox.Show("Ingen løber valgt til opdatering.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                _repository.Update(runner);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fejl ved opdatering: {ex.Message}", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        });
 
 
 

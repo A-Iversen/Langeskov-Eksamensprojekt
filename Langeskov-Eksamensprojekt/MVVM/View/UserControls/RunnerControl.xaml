@@ -128,45 +128,49 @@
             <DataGrid x:Name="runnerDataGrid" RowStyle="{StaticResource DataGridRowStyle1}" 
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
                       Style="{StaticResource DataGridStyle1}" 
-                      CanUserAddRows="True"
-                      HorizontalAlignment="Stretch"
+                      CanUserAddRows="False"
                       Margin="3,15,0,0" 
                       AutoGenerateColumns="False"
                       CanUserResizeColumns="True"
                       
+                      
+                      RowEditEnding="runnerDataGrid_RowEditEnding"
+                      
                       ItemsSource="{Binding Runners}"
                       SelectedItem="{Binding SelectedRunner}">
+
                 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding RunnerID}"
+
+                    <DataGridTextColumn Header="ID" Binding="{Binding RunnerID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         MinWidth="42"
                                         IsReadOnly="True"/>
 
-                    <DataGridTextColumn Header="Navn" Binding="{Binding Name}"
+                    <DataGridTextColumn Header="Navn" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         MinWidth="100"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Køn" Binding="{Binding Gender}"
+                    <DataGridTextColumn Header="Køn" Binding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                         MinWidth="52"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address}" 
+                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode}" 
+                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber}" 
+                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" 
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         MinWidth="120"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}'}" 
+                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         MinWidth="80"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 

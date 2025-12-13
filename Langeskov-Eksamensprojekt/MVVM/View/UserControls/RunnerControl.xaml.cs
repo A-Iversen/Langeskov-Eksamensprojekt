@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Controls;
-using MVVM.ViewModel;
+﻿using Infrastructure.Model;
 using Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
+using MVVM.ViewModel;
+using System;
+using System.Windows.Controls;
 
 namespace MVVM.View.UserControls
 {
@@ -22,6 +23,26 @@ namespace MVVM.View.UserControls
             var runnerGroupRepo = new SQLRunnerGroupRepository(connectionString);
 
             DataContext = new RunnerViewModel(runnerRepo, runnerGroupRepo);
+        }
+
+
+        //Event der er opkoblet til Datagridet, som er nødvendig til at sende et signal til en metode i viewmodellen.
+        //Har at gøre med redigering af cellerne i datagridet.
+        private void runnerDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+        {
+            if (e.EditAction != DataGridEditAction.Commit)
+                return;
+
+            var grid = (DataGrid)sender;
+
+            if (DataContext is RunnerViewModel vm && e.Row.Item is Runner runner)
+            {
+                grid.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (vm.UpdateRunnerCommand.CanExecute(runner))
+                        vm.UpdateRunnerCommand.Execute(runner);
+                }), System.Windows.Threading.DispatcherPriority.Background);
+            }
         }
     }
 }
