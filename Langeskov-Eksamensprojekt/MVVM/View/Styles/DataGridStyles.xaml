@@ -206,6 +206,9 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{StaticResource text}"/>
         <Setter Property="BorderThickness" Value="0"/>
+
+        <Setter Property="IsSynchronizedWithCurrentItem" Value="False"/>
+
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="Padding" Value="6,3,5,3"/>

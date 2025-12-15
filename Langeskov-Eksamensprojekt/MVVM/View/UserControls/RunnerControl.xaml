@@ -6,9 +6,12 @@
              xmlns:local="clr-namespace:MVVM.View.UserControls" xmlns:viewmodel="clr-namespace:MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RunnerViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="570" d:DesignWidth="1000">
+    
     <UserControl.Resources>
         <CollectionViewSource x:Key="RunnerGroupsSource" 
                               Source="{Binding RunnerGroups}" />
+        <CollectionViewSource x:Key="GenderOptionsSource" 
+                          Source="{Binding GenderOptions}" />
     </UserControl.Resources>
     
     <Grid>
@@ -23,7 +26,7 @@
         </Grid.RowDefinitions>
         
         
-        <!--Left Create Runner Panel-->
+        <!--Create Runner Panel-->
         <Border Grid.Column="0" Grid.RowSpan="2"
                 CornerRadius="0,20,20,20" d:Background="{StaticResource bg}">
 
@@ -68,6 +71,16 @@
                          HorizontalAlignment="Left"
                          Width="185"/>
 
+                <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="Løber Gruppe"
+                          Margin="0,20,0,0" Width="auto"
+          
+                          ItemsSource="{Binding RunnerGroups}"
+          
+                          DisplayMemberPath="RunnerGroupName" 
+                          SelectedValuePath="RunnerGroupID"
+                          SelectedValue="{Binding SelectedRunnerGroupID, Mode=TwoWay}">
+                </ComboBox>
+
                 <Calendar Style="{StaticResource CalendarStyle1}"
                           CalendarButtonStyle="{StaticResource CalendarButtonStyle1}" 
                           CalendarDayButtonStyle="{StaticResource CalendarDayButtonStyle1}" 
@@ -79,21 +92,20 @@
                           SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"
                           Tag="Fødselsdato"/>
 
+
                 <Button Style="{DynamicResource confirmationButton}" Height="35"
                         Width="160"
-                        Margin="0,30,0,0"
+                        Margin="0,25,0,0"
                         Content="Tilføj Bruger"
                         Command="{Binding CreateRunnerCommand}">
                 </Button>
 
             </StackPanel>
 
-
-
         </Border>
 
 
-        <!--Middle Buttons-->
+        <!--Create/Delete Runner Buttons-->
         <RadioButton Style="{StaticResource addButton}"
                      Grid.Column="1" Grid.Row="1"
                      VerticalAlignment="Top"
@@ -150,12 +162,17 @@
                                         IsReadOnly="True"/>
 
                     <DataGridTextColumn Header="Navn" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                        MinWidth="100"
+                                        MinWidth="115"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Køn" Binding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-                                        MinWidth="52"
-                                        EditingElementStyle="{StaticResource CellEditingStyle1}"/>
+                    <DataGridComboBoxColumn Header="Køn"
+                                            MinWidth="80"
+                                            EditingElementStyle="{StaticResource DataGridComboBoxStyle}"
+                                            ElementStyle="{StaticResource DataGridComboBoxStyle}"                                            
+                                            
+                                            ItemsSource="{Binding Source={StaticResource GenderOptionsSource}}"
+                                            SelectedItemBinding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    </DataGridComboBoxColumn>
 
                     <DataGridTextColumn Header="Addresse" Binding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
                                         MinWidth="95"
@@ -170,21 +187,22 @@
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                        MinWidth="120"
+                                        MinWidth="125"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
-                                        MinWidth="80"
+                                        MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
                     <DataGridComboBoxColumn Header="BetalingsGruppe"
                                             MinWidth="120"
+                                            EditingElementStyle="{StaticResource DataGridComboBoxStyle}"
+                                            ElementStyle="{StaticResource DataGridComboBoxStyle}"                                            
+                                            
                                             ItemsSource="{Binding Source={StaticResource RunnerGroupsSource}}"
                                             DisplayMemberPath="RunnerGroupName"
                                             SelectedValuePath="RunnerGroupID"
-                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                            EditingElementStyle="{StaticResource DataGridComboBoxStyle}"
-                                            ElementStyle="{StaticResource DataGridComboBoxStyle}">
+                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     </DataGridComboBoxColumn>   
 
                 </DataGrid.Columns>

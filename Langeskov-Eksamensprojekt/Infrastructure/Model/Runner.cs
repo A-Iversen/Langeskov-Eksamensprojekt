@@ -25,13 +25,12 @@ namespace Infrastructure.Model
         // FK fra SubsidyGroup
         public int SubsidyGroupID { get; private set; }
 
-        // FK fra MemberGroup - make setter public so WPF can two-way bind SelectedValue to this property
+        // FK fra MemberGroup
         public int RunnerGroupID { get; set; }
 
-        //
+
         public Runner() { }
 
-        //
         public Runner(string name, string? email, string? address, string? postalCode, string? phoneNumber, Gender? gender, DateTime dateOfBirth, int runnerGroupID)
         {
             Name = name;

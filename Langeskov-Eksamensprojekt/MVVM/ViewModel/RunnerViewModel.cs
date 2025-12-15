@@ -141,6 +141,7 @@ namespace MVVM.ViewModel
         public IEnumerable<Gender> GenderOptions => Enum.GetValues(typeof(Gender)).Cast<Gender>();
 
 
+        //Constructor
         public RunnerViewModel(IRunnerRepository repository, IRunnerGroupRepository? runnerGroupRepository = null)
         {
             _repository = repository;
@@ -219,19 +220,18 @@ namespace MVVM.ViewModel
         // Kommando til at oprette et nyt medlem
         public ICommand CreateRunnerCommand { get; }
 
-        // Tilmelding af nyt medlem
+        //--Oprettelse af Runner---
         public Runner CreateNewRunner()
         {
-            //Midlertidigt deaktiveret for nemmere testning.
-            //if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
-            //{
-            //    throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
-            //}
+            if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
+            {
+                throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
+            }
 
-            //if (_repository.RunnerExists(Name, DateOfBirth))
-            //{
-            //    throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
-            //}
+            if (_repository.RunnerExists(Name, DateOfBirth))
+            {
+                throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
+            }
 
             
             var newRunner = new Runner(name: Name, email: Email, address: Address, postalCode: PostalCode, phoneNumber: PhoneNumber, gender: Gender, dateOfBirth: DateOfBirth, runnerGroupID: SelectedRunnerGroupID);
