@@ -106,12 +106,22 @@ namespace Infrastructure
                 Debug.WriteLine($"FEJL: Opsætningsfilen '{DatabaseSetupFileName}' blev ikke fundet i stien: '{sqlFilePath}'. Sørg for at filen er sat til 'Copy to Output Directory' i dine projektindstillinger.");
                 throw;
             }
+            
+            // Split the script into batches using "GO" as a separator
+            var scriptBatches = sqlScript.Split(new[] { "GO" }, StringSplitOptions.RemoveEmptyEntries);
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                SqlCommand command = new SqlCommand(sqlScript, connection);
-                command.ExecuteNonQuery();
+                foreach (var batch in scriptBatches)
+                {
+                    if (string.IsNullOrWhiteSpace(batch)) continue;
+                    
+                    using (SqlCommand command = new SqlCommand(batch, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
             }
         }
     }
