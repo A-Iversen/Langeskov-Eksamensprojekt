@@ -200,105 +200,15 @@ namespace MVVM.ViewModel
         private readonly IRunnerRepository _repository;
         private readonly IRunnerGroupRepository? _runnerGroupRepository;
 
-        // Den valgte medlemskabstype fra UI - bruger nu integer ID i stedet for string navn
-        public int SelectedRunnerGroupID { get; set; }
-
         //Properties & ObservableCollection for dataindtastning (binder til View/UI)
-        private string _name = string.Empty;
-        public string Name
+        private RunnerValidationWrapper _newRunner;
+        public RunnerValidationWrapper NewRunner
         {
-            get => _name;
+            get => _newRunner;
             set
             {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _email = string.Empty;
-        public string Email
-        {
-            get => _email;
-            set
-            {
-                if (_email != value)
-                {
-                    _email = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private DateTime _dateOfBirth;
-        public DateTime DateOfBirth
-        {
-            get => _dateOfBirth;
-            set
-            {
-                if (_dateOfBirth != value)
-                {
-                    _dateOfBirth = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private Gender? _gender;
-        public Gender? Gender
-        {
-            get => _gender;
-            set
-            {
-                if (_gender != value)
-                {
-                    _gender = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _address = string.Empty;
-        public string Address
-        {
-            get => _address;
-            set
-            {
-                if (_address != value)
-                {
-                    _address = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _postalCode = string.Empty;
-        public string PostalCode
-        {
-            get => _postalCode;
-            set
-            {
-                if (_postalCode != value)
-                {
-                    _postalCode = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _phoneNumber = string.Empty;
-        public string PhoneNumber
-        {
-            get => _phoneNumber;
-            set
-            {
-                if (_phoneNumber != value)
-                {
-                    _phoneNumber = value;
-                    OnPropertyChanged();
-                }
+                _newRunner = value;
+                OnPropertyChanged();
             }
         }
 
@@ -336,8 +246,8 @@ namespace MVVM.ViewModel
             _repository = repository;
             _runnerGroupRepository = runnerGroupRepository;
 
-            
-
+            // Initializere wrapperen med en blank Runner model.
+            NewRunner = new RunnerValidationWrapper(new Runner());
 
             LoadRunners();
             LoadRunnerGroups();
@@ -399,38 +309,30 @@ namespace MVVM.ViewModel
         private void CreateRunner()
         {
             // Validerings logik
-            if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
+            if (string.IsNullOrWhiteSpace(NewRunner.Name) || NewRunner.DateOfBirth == default)
             {
-                MessageBox.Show("Navn, fødselsdato og medlemskabstype skal udfyldes.", "Valideringsfejl", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Navn og fødselsdato skal udfyldes.", "Valideringsfejl");
                 return;
             }
 
             try
             {
-                if (_repository.RunnerExists(Name, DateOfBirth))
+                if (_repository.RunnerExists(NewRunner.Name, NewRunner.DateOfBirth))
                 {
                     MessageBox.Show("Medlemmet findes allerede.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-                // Oprettelse af ny Runner instans
-                var newRunner = new Runner(
-                    name: Name,
-                    email: Email,
-                    address: Address,
-                    postalCode: PostalCode,
-                    phoneNumber: PhoneNumber,
-                    gender: Gender,
-                    dateOfBirth: DateOfBirth,
-                    runnerGroupID: SelectedRunnerGroupID
-                );
+                // Oprettelse af ny Runner fra Wrapper
+                // Model attributen er af typen Runner så det er "stortset" det samme som en type: new Runner
+                var runnerModel = NewRunner.Model;
 
                 // Automatisk Gruppeberegning & Konvertering til database INT Primary Key.
-                var allocatedGroupEnum = CalculateSubsidyGroup(newRunner.DateOfBirth);
-                newRunner.SetSubsidyGroup((int)allocatedGroupEnum);
+                var allocatedGroupEnum = CalculateSubsidyGroup(runnerModel.DateOfBirth);
+                runnerModel.SetSubsidyGroup((int)allocatedGroupEnum);
 
                 // Oprettelse i database
-                var createdRunner = _repository.Add(newRunner);
+                var createdRunner = _repository.Add(runnerModel);
 
                 //Tilføjelse til ObservableCollection for UI opdatering
                 Runners.Add(new RunnerValidationWrapper(createdRunner));
@@ -438,6 +340,9 @@ namespace MVVM.ViewModel
                 //Simulation af Bekræftelse/Mail
                 Console.WriteLine($"Bekræftelse sendt til {createdRunner.Email ?? "ingen email"}. Tildelt tilskudsgruppe ID: {createdRunner.SubsidyGroupID}");
 
+
+                //Laver et
+                NewRunner = new RunnerValidationWrapper(new Runner());
             }
             catch (Exception ex)
             {

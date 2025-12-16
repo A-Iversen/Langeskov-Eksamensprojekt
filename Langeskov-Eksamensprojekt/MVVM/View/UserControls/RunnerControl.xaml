@@ -35,14 +35,14 @@
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                     <TextBox Style="{StaticResource textBox}" Tag="Fulde Navn"
-                         Text="{Binding Name}"
+                         Text="{Binding NewRunner.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,15,5,-5" Width="116"/>
 
                     <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
                               Margin="0,20,0,0" Width="64"
                               
                               ItemsSource="{Binding GenderOptions}"
-                              SelectedItem="{Binding Gender}"
+                              SelectedItem="{Binding NewRunner.Gender}"
                               SelectedIndex="-1">
     
                     </ComboBox>
@@ -51,22 +51,22 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
-                         Text="{Binding Address}"
+                         Text="{Binding NewRunner.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,20,0,0" Width="120"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
-                         Text="{Binding PostalCode}"
+                         Text="{Binding NewRunner.PostalCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="5,20,0,0" Width="60"/>
                 </StackPanel>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Email"
-                         Text="{Binding Email}"
+                         Text="{Binding NewRunner.Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"/>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Telefon"
-                         Text="{Binding PhoneNumber}"
+                         Text="{Binding NewRunner.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"/>
@@ -78,7 +78,7 @@
           
                           DisplayMemberPath="RunnerGroupName" 
                           SelectedValuePath="RunnerGroupID"
-                          SelectedValue="{Binding SelectedRunnerGroupID, Mode=TwoWay}">
+                          SelectedValue="{Binding NewRunner.RunnerGroupID, Mode=TwoWay}">
                 </ComboBox>
 
                 <Calendar Style="{StaticResource CalendarStyle1}"
@@ -89,7 +89,7 @@
                           HorizontalAlignment="Left"
                           BorderThickness="1,1,1,2.3"
                           DisplayMode="Decade"
-                          SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"
+                          SelectedDate="{Binding NewRunner.DateOfBirth, Mode=TwoWay}"
                           Tag="Fødselsdato"/>
 
 
