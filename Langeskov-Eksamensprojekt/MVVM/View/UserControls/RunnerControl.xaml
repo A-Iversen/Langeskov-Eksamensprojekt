@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MVVM.View.UserControls" xmlns:viewmodel="clr-namespace:MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RunnerViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="570" d:DesignWidth="1000">
+             d:DesignHeight="570" d:DesignWidth="1050">
     
     <UserControl.Resources>
         <CollectionViewSource x:Key="RunnerGroupsSource" 
@@ -157,11 +157,11 @@
                 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="ID" Binding="{Binding RunnerID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <DataGridTextColumn Header="ID" Binding="{Binding RunnerID, Mode=OneWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
                                         MinWidth="42"
                                         IsReadOnly="True"/>
 
-                    <DataGridTextColumn Header="Navn" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <DataGridTextColumn Header="Navn" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
                                         MinWidth="115"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
@@ -171,26 +171,26 @@
                                             ElementStyle="{StaticResource DataGridComboBoxStyle}"                                            
                                             
                                             ItemsSource="{Binding Source={StaticResource GenderOptionsSource}}"
-                                            SelectedItemBinding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            SelectedItemBinding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                     </DataGridComboBoxColumn>
 
-                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="125"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}', Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
@@ -202,7 +202,7 @@
                                             ItemsSource="{Binding Source={StaticResource RunnerGroupsSource}}"
                                             DisplayMemberPath="RunnerGroupName"
                                             SelectedValuePath="RunnerGroupID"
-                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                     </DataGridComboBoxColumn>   
 
                 </DataGrid.Columns>

@@ -232,7 +232,6 @@
                            
                             <Grid x:Name="DropDown" 
                                   SnapsToDevicePixels="True" 
-                                  MinWidth="{Binding ActualWidth, ElementName=MainGrid}" 
                                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
                               
                                 <Border x:Name="dropDownBorder" 

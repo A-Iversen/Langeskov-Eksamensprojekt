@@ -5,10 +5,12 @@ using System;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,6 +19,172 @@ using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
 
 namespace MVVM.ViewModel
 {
+    // This wrapper handles the validation logic for the DataGrid rows
+    public class RunnerValidationWrapper : ViewModelBase, IDataErrorInfo
+    {
+        // Reference to the actual Model
+        public Runner Model { get; }
+
+        public RunnerValidationWrapper(Runner runner)
+        {
+            Model = runner;
+        }
+
+        // Expose properties you want to edit and validate
+        public string Name
+        {
+            get => Model.Name;
+            set
+            {
+                if (Model.Name != value)
+                {
+                    Model.Name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? Email
+        {
+            get => Model.Email;
+            set
+            {
+                if (Model.Email != value)
+                {
+                    Model.Email = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? PostalCode
+        {
+            get => Model.PostalCode;
+            set
+            {
+                if (Model.PostalCode != value)
+                {
+                    Model.PostalCode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? PhoneNumber
+        {
+            get => Model.PhoneNumber;
+            set
+            {
+                if (Model.PhoneNumber != value)
+                {
+                    Model.PhoneNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? Address
+        {
+            get => Model.Address;
+            set
+            {
+                if (Model.Address != value)
+                {
+                    Model.Address = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public Gender? Gender
+        {
+            get => Model.Gender;
+            set
+            {
+                if (Model.Gender != value)
+                {
+                    Model.Gender = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public DateTime DateOfBirth
+        {
+            get => Model.DateOfBirth;
+            set
+            {
+                if (Model.DateOfBirth != value)
+                {
+                    Model.DateOfBirth = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // Expose other properties needed for display (read-only or passthrough)
+        public int RunnerID => Model.RunnerID;
+
+
+        public int RunnerGroupID
+        {
+            get => Model.RunnerGroupID;
+            set
+            {
+                if (Model.RunnerGroupID != value)
+                {
+                    Model.RunnerGroupID = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        // --- IDataErrorInfo Implementation (Logic in ViewModel!) ---
+        public string Error => null;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string result = null;
+
+                switch (columnName)
+                {
+                    case nameof(Name):
+                        if (string.IsNullOrWhiteSpace(Name))
+                            result = "Navn er påkrævet.";
+                        else if (Name.Length < 2)
+                            result = "Navn skal være mindst 2 tegn.";
+                        break;
+
+                    case nameof(Email):
+                        if (string.IsNullOrWhiteSpace(Email))
+                            result = "Email er påkrævet.";
+                        else if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+                            result = "Ugyldigt email format.";
+                        break;
+
+                    case nameof(PostalCode):
+                        if (string.IsNullOrWhiteSpace(PostalCode))
+                            result = "Post Nr. er påkrævet.";
+                        else if (!Regex.IsMatch(PostalCode, @"^\d{4}$"))
+                            result = "Post Nr. skal være 4 cifre.";
+                        break;
+
+                    case nameof(PhoneNumber):
+                        if (!string.IsNullOrWhiteSpace(PhoneNumber) && !Regex.IsMatch(PhoneNumber, @"^\d{8}$"))
+                            result = "Telefon skal være 8 cifre.";
+                        break;
+                }
+                return result;
+            }
+        }
+    }
+    
+
+
+
+
     public class RunnerViewModel : ViewModelBase
     {
         private readonly IRunnerRepository _repository;
@@ -124,8 +292,8 @@ namespace MVVM.ViewModel
             }
         }
 
-        private ObservableCollection<Runner> _runners { get; set; } = new ObservableCollection<Runner>();
-        public ObservableCollection<Runner> Runners
+        private ObservableCollection<RunnerValidationWrapper> _runners { get; set; } = new ObservableCollection<RunnerValidationWrapper>();
+        public ObservableCollection<RunnerValidationWrapper> Runners
         {
             get { return _runners; }
             set { _runners = value; }
@@ -153,7 +321,7 @@ namespace MVVM.ViewModel
                 try
                 {
                     var runner = CreateNewRunner();
-                    Runners.Add(runner); // Optional: show in list
+                    Runners.Add(new RunnerValidationWrapper(runner)); // Optional: show in list
                     MessageBox.Show($"Bruger '{runner.Name}' blev oprettet.", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
@@ -174,7 +342,7 @@ namespace MVVM.ViewModel
             _runners.Clear();
             foreach (var runner in runners)
             {
-                _runners.Add(runner);
+                _runners.Add(new RunnerValidationWrapper(runner));
             }
         }
 
@@ -256,7 +424,7 @@ namespace MVVM.ViewModel
         //---Editing af Runner---
         public ICommand UpdateRunnerCommand => new RelayCommand(param =>
         {
-            var runner = param as Runner ?? SelectedRunner;
+            var runner = param as RunnerValidationWrapper ?? SelectedRunner;
             if (runner == null)
             {
                 MessageBox.Show("Ingen løber valgt til opdatering.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -265,7 +433,7 @@ namespace MVVM.ViewModel
 
             try
             {
-                _repository.Update(runner);
+                _repository.Update(runner.Model);
             }
             catch (Exception ex)
             {
@@ -276,8 +444,8 @@ namespace MVVM.ViewModel
 
 
         //---Sletning af Runner---
-        private Runner _selectedRunner;
-        public Runner SelectedRunner
+        private RunnerValidationWrapper _selectedRunner;
+        public RunnerValidationWrapper SelectedRunner
         {
             get { return _selectedRunner; }
             set
@@ -296,7 +464,7 @@ namespace MVVM.ViewModel
             }
             try
             {
-                _repository.Delete(SelectedRunner.RunnerID);
+                _repository.Delete(SelectedRunner.Model.RunnerID);
                 Runners.Remove(SelectedRunner);
             }
             catch (Exception ex)
