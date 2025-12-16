@@ -119,3 +119,17 @@ VALUES
 
 -- 20. Ung Voksen (Udenbys, Single)
 ('Oscar Overtal', 'oscar@over.dk', 'Aarhusvej 1', '8000', '10101010', 'Mand', '2000-12-12', 3, 1);
+
+-- Stored Procedure to get a runner by ID
+IF OBJECT_ID('sp_GetRunnerById') IS NOT NULL DROP PROCEDURE sp_GetRunnerById;
+GO
+
+CREATE PROCEDURE sp_GetRunnerById
+    @RunnerID INT
+AS
+BEGIN
+    SELECT RunnerID, Name, Email, Address, PostalCode, PhoneNumber, Gender, DateOfBirth, SubsidyGroupID, RunnerGroupID
+    FROM Runner
+    WHERE RunnerID = @RunnerID;
+END
+GO
