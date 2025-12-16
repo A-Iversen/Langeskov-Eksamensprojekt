@@ -1,19 +1,32 @@
 sequenceDiagram
-    participant Medlem
+    actor Bruger
     participant System
 
-    activate Medlem
-    Medlem->>System:indtastTilmelding(navn, k�n, f�dselsdato, adresse, postnr, tlf nr, email, medlemsGruppe)
-    
-    alt Valideringsfejl
-        System-->>Medlem: afvisTilmelding(fejlbesked)
-    end
-    
-    alt Medlem findes allerede
-        System-->>Medlem: visGenaktiveringsMulighed()
+    Bruger->>System: Åbner programmet
+    System-->>Bruger: Viser hovedvindue med løberoversigt
+
+    Bruger->>System: Indtaster nye løberdetaljer (navn, email, etc.)
+    Bruger->>System: Klikker 'Tilføj Løber'
+    System->>System: Validerer input
+    alt Gyldigt input
+        System->>System: Gemmer ny løber i database
+        System-->>Bruger: Opdaterer løberliste med ny løber
+    else Ugyldigt input
+        System-->>Bruger: Viser fejlmeddelelse
     end
 
-    System->>System: tildelMedlemsID()
-    System->>System: s�tTilskudsGruppe(f�dselsdato, k�n)
-    System-->>Medlem: visTilmeldingBekr�ftelse(medlemsID)
-    deactivate Medlem
+    Bruger->>System: Vælger en løber i listen
+    Bruger->>System: Redigerer detaljer i datagrid
+    System->>System: Validerer ændringer
+    System->>System: Opdaterer løber i database
+    System-->>Bruger: Viser opdateret løber i listen
+
+    Bruger->>System: Vælger en løber i listen
+    Bruger->>System: Klikker 'Slet Løber'
+    System->>System: Bekræfter sletning
+    System->>System: Sletter løber fra database
+    System-->>Bruger: Fjerner løber fra listen
+
+    Bruger->>System: Navigerer til 'Regnskab'
+    System->>System: Henter og beregner tilskudsgrupper
+    System-->>Bruger: Viser regnskabsoversigt

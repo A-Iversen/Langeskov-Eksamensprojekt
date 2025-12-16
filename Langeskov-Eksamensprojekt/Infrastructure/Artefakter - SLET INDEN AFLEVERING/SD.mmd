@@ -1,46 +1,58 @@
 sequenceDiagram
-    participant Medlem
-    participant View
-    participant ViewModel
-    participant Repository
-    participant Database
+    participant User
+    participant V as RunnerControl (View)
+    participant C as RunnerControl.xaml.cs (Code-Behind)
+    participant VM as RunnerViewModel
+    participant R as ISQLRunnerRepository
+    participant DB as Database
 
-    Medlem->>View: indtastTilmelding(navn, køn, fødselsdato, ...)
-    
-    Note over View: Data Binding/Event
-    View->>ViewModel: behandleTilmelding(data)
+    %% Initial Load %%
+    C->>C: new SQLRunnerRepository()
+    C->>VM: new RunnerViewModel(repository)
+    C->>V: DataContext = viewModel
+    VM->>VM: LoadRunners()
+    VM->>R: GetAll()
+    R->>DB: Executes SELECT query
+    DB-->>R: Returns runner data
+    R-->>VM: Maps and returns List<Runner>
+    VM->>V: Updates ObservableCollection<Runner>
+    V-->>User: Displays list of runners
 
-    %% Validering og Dublet-tjek
-    ViewModel->>ViewModel: validerData(data)
-    
-    alt Valideringsfejl
-        ViewModel-->>View: visFejl(fejlbesked)
-        View-->>Medlem: afvisTilmelding(fejlbesked)
+    %% Add Runner Use Case %%
+    User->>V: Enters runner details
+    User->>V: Clicks 'CreateRunnerCommand' Button
+    V->>VM: CreateRunnerCommand.Execute()
+    VM->>VM: Validates new runner properties
+    alt Validation Success
+        VM->>R: Add(newRunner)
+        R->>DB: Executes INSERT query
+        DB-->>R: Confirms addition
+        R-->>VM: Returns success
+        VM->>V: Adds new runner to ObservableCollection
+        V-->>User: Grid is updated with new runner
+    else Validation Failure
+        VM-->>User: Displays error message (implicitly via UI binding)
     end
-    
-    ViewModel->>Repository: findMedlem(navn, fødselsdato)
-    Repository->>Database: SELECT
-    Database-->>Repository: [Medlem|null]
-    Repository-->>ViewModel: [Medlem|null]
 
-    alt Medlem findes allerede
-        ViewModel-->>View: visGenaktiveringsMulighed()
-        View-->>Medlem: visGenaktiveringsMulighed()
-    end
+    %% Update Runner Use Case %%
+    User->>V: Edits a runner in the DataGrid
+    V->>C: Triggers RowEditEnding event
+    C->>VM: UpdateRunnerCommand.Execute(editedRunner)
+    VM->>VM: Validates edited runner
+    VM->>R: Update(editedRunner)
+    R->>DB: Executes UPDATE query
+    DB-->>R: Confirms update
+    R-->>VM: Returns success
+    %% The ObservableCollection automatically reflects changes %%
+    V-->>User: Grid is updated with new values
 
-    %% Succesforløb
-    
-    Note over ViewModel,Database: Oprettelse og gruppering
-    
-    ViewModel->>ViewModel: tildelUniktMedlemsID()
-    ViewModel->>ViewModel: beregnBetalingsGruppe(fødselsdato, køn)
-
-    ViewModel->>Repository: opretMedlem(nytMedlem)
-    Repository->>Database: INSERT
-    Database-->>Repository: OK
-    
-    Note over ViewModel: Forretningslogik
-    ViewModel->>ViewModel: genererBekræftelseOgMail() 
-
-    ViewModel-->>View: returnerMedlemsID(nytID)
-    View-->>Medlem: visTilmeldingBekræftelse(nytID)
+    %% Delete Runner Use Case %%
+    User->>V: Selects a runner
+    User->>V: Clicks 'DeleteRunnerCommand' Button
+    V->>VM: DeleteRunnerCommand.Execute(selectedRunner)
+    VM->>R: Delete(selectedRunner.Id)
+    R->>DB: Executes DELETE query
+    DB-->>R: Confirms deletion
+    R-->>VM: Returns success
+    VM->>V: Removes runner from ObservableCollection
+    V-->>User: Runner disappears from grid
