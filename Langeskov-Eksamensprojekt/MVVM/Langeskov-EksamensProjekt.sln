@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVM", "MVVM.csproj", "{D68
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "..\Infrastructure\Infrastructure.csproj", "{6C61962E-1C5A-4C22-A126-CDD6FD32875B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unittests", "..\Unittests\Unittests.csproj", "{C6749FDF-90CD-4007-A372-4C50ADC0D444}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6C61962E-1C5A-4C22-A126-CDD6FD32875B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C61962E-1C5A-4C22-A126-CDD6FD32875B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C61962E-1C5A-4C22-A126-CDD6FD32875B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6749FDF-90CD-4007-A372-4C50ADC0D444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6749FDF-90CD-4007-A372-4C50ADC0D444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6749FDF-90CD-4007-A372-4C50ADC0D444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6749FDF-90CD-4007-A372-4C50ADC0D444}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
