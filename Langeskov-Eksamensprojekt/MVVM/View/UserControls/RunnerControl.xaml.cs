@@ -1,5 +1,6 @@
-﻿using Infrastructure.Model;
-using Infrastructure.Repository;
+﻿using Infrastructure.Abstraction;
+using Infrastructure.Model;
+using Infrastructure.Persistence; // Added this line
 using Microsoft.Extensions.Configuration;
 using MVVM.ViewModel;
 using System;
@@ -35,7 +36,7 @@ namespace MVVM.View.UserControls
 
             var grid = (DataGrid)sender;
 
-            if (DataContext is RunnerViewModel vm && e.Row.Item is RunnerValidationWrapper runner)
+            if (DataContext is RunnerViewModel vm && e.Row.Item is Runner runner)
             {
                 grid.Dispatcher.BeginInvoke(new Action(() =>
                 {

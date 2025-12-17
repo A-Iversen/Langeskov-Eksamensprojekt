@@ -1,5 +1,5 @@
 ﻿    
-namespace Infrastructure.Repository
+namespace Infrastructure.Abstraction
 {
     public interface IRepository<T> where T : class
     {

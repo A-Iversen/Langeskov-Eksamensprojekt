@@ -1,6 +1,6 @@
 using Infrastructure.Model;
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Abstraction
 {
     public interface ISubsidyGroupRepository : IRepository<SubsidyGroup>
     {

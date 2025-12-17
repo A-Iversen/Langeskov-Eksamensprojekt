@@ -1,7 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Infrastructure.Model;
+using Infrastructure.Abstraction; // Added this line
 
-namespace Infrastructure.Repository
+namespace Infrastructure.Persistence
 {
    public class SQLRunnerRepository : IRunnerRepository
    {
