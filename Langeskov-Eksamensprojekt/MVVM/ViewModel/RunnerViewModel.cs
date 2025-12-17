@@ -32,6 +32,20 @@ namespace MVVM.ViewModel
         }
 
         // Exposer properties til validering
+        public int RunnerID
+        {
+            get => Model.RunnerID;
+            set
+            {
+                if (Model.RunnerID != value)
+                {
+                    Model.RunnerID = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+
         public string Name
         {
             get => Model.Name;
@@ -123,18 +137,7 @@ namespace MVVM.ViewModel
             }
         }
 
-        public int RunnerID
-        {
-            get => Model.RunnerID;
-            set
-            {
-                if (Model.RunnerID != value)
-                {
-                    Model.RunnerID = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        
 
         public int RunnerGroupID
         {

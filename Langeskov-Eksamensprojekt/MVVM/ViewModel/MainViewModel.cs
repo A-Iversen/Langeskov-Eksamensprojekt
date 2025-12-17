@@ -26,6 +26,5 @@ namespace MVVM.ViewModel
         public RelayCommand ShowRunnerViewCommand => new RelayCommand(execute => CurrentView = new RunnerControl());
 		public RelayCommand ShowAccountingViewCommand => new RelayCommand(execute => CurrentView = new AccountingControl());
 
-
 	}
 }
