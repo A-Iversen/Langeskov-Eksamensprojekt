@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
+using System.ComponentModel;
 
 
 namespace MVVM.ViewModel
