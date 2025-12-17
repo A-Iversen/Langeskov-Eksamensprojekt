@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Infrastructure.Model;
-using Infrastructure.Repository;
+using Infrastructure.Abstraction;
 using MVVM.Core;
 using MVVM.ViewModel.dto;
 

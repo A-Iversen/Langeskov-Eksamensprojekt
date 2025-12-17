@@ -1,7 +1,6 @@
 ﻿using Infrastructure.Model;
-using Infrastructure.Repository;
+using Infrastructure.Abstraction;
 using MVVM.Core;
-using System;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -276,8 +275,8 @@ namespace MVVM.ViewModel
 
 
         //---Sletning af Runner---
-        private Runner _selectedRunner;
-        public Runner SelectedRunner
+        private Runner? _selectedRunner;
+        public Runner? SelectedRunner
         {
             get { return _selectedRunner; }
             set
