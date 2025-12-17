@@ -342,7 +342,7 @@
 
     <!--Data Grid Row-->
     <Style x:Key="DataGridRowStyle1" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Margin" Value="0 4 0 0" />
+        <Setter Property="Margin" Value="0 3 0 0" />
         <Setter Property="Height" Value="30"/>
         <Setter Property="Background" Value="{StaticResource bg}"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>

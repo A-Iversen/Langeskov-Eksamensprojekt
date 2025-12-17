@@ -55,7 +55,8 @@
                          Margin="0,20,0,0" Width="120"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
-                         Text="{Binding NewRunner.PostalCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
+                         Text="{Binding NewRunner.PostalCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}" 
+                         MaxLength="4"
                          Margin="5,20,0,0" Width="60"/>
                 </StackPanel>
 
@@ -66,7 +67,8 @@
                          Width="185"/>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Telefon"
-                         Text="{Binding NewRunner.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
+                         Text="{Binding NewRunner.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}" 
+                         MaxLength="8"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"/>

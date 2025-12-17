@@ -45,8 +45,9 @@
                         </Trigger>
                         <Trigger Property="IsSelectionActive" Value="True">
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
-                    
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

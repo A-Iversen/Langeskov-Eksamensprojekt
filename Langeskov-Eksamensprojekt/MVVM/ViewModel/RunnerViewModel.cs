@@ -23,7 +23,7 @@ namespace MVVM.ViewModel
     // bruges som et stop mellem ViewModel og Model for at implementere validering af DataGrid felterne.
     public class RunnerValidationWrapper : ViewModelBase, IDataErrorInfo
     {
-        // Reference til Runner.cs modellen
+        // Data fra Runner.cs modellen
         public Runner Model { get; }
 
         public RunnerValidationWrapper(Runner runner)
@@ -163,27 +163,35 @@ namespace MVVM.ViewModel
                     case nameof(Name):
                         if (string.IsNullOrWhiteSpace(Name))
                             result = "Navn er påkrævet.";
-                        else if (Name.Length < 2)
-                            result = "Navn skal være mindst 2 tegn.";
                         break;
 
-                    case nameof(Email):
-                        if (string.IsNullOrWhiteSpace(Email))
-                            result = "Email er påkrævet.";
-                        else if (!Regex.IsMatch(Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-                            result = "Ugyldigt email format.";
+                    case nameof(Address):
+                        if (string.IsNullOrWhiteSpace(Address))
+                            result = "Addresse er påkrævet.";
                         break;
 
                     case nameof(PostalCode):
                         if (string.IsNullOrWhiteSpace(PostalCode))
                             result = "Post Nr. er påkrævet.";
-                        else if (!Regex.IsMatch(PostalCode, @"^\d{4}$"))
+                        else if (PostalCode.Length != 4)
                             result = "Post Nr. skal være 4 cifre.";
                         break;
 
                     case nameof(PhoneNumber):
-                        if (!string.IsNullOrWhiteSpace(PhoneNumber) && !Regex.IsMatch(PhoneNumber, @"^\d{8}$"))
+                        if (string.IsNullOrWhiteSpace(PhoneNumber))
+                            result = "Telefonnummer er påkrævet.";
+                        else if (PhoneNumber.Length != 8)
                             result = "Telefon skal være 8 cifre.";
+                        break;
+
+                    case nameof(Email):
+                        if (string.IsNullOrWhiteSpace(Email))
+                            result = "Email er påkrævet.";
+                        break;
+
+                    case nameof(DateOfBirth):
+                        if (DateOfBirth == default)
+                            result = "Fødselsdato er påkrævet.";
                         break;
                 }
                 return result;
@@ -311,7 +319,7 @@ namespace MVVM.ViewModel
             // Validerings logik
             if (string.IsNullOrWhiteSpace(NewRunner.Name) || NewRunner.DateOfBirth == default)
             {
-                MessageBox.Show("Navn og fødselsdato skal udfyldes.", "Valideringsfejl");
+                MessageBox.Show("Udfyld venligst alle felter korrekt.", "Valideringsfejl");
                 return;
             }
 
@@ -341,7 +349,7 @@ namespace MVVM.ViewModel
                 Console.WriteLine($"Bekræftelse sendt til {createdRunner.Email ?? "ingen email"}. Tildelt tilskudsgruppe ID: {createdRunner.SubsidyGroupID}");
 
 
-                //Laver et
+                //Laver et nyt Runner objekt som ville resette input felterne i UI
                 NewRunner = new RunnerValidationWrapper(new Runner());
             }
             catch (Exception ex)
