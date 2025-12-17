@@ -2,9 +2,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Infrastructure.Model;
 using System;
 using Infrastructure;
-using Infrastructure.Repository;
+using Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Unittests;
 
 namespace Unittests
 {
@@ -62,7 +63,21 @@ namespace Unittests
         public void GetRunnerById_ReturnsCorrectRunner()
         {
             // Arrange
-            var repository = new SQLRunnerRepository(_connectionString);
+            var sanne = new Runner(
+                "Sanne Sprinter", 
+                "sanne@eksempel.dk", 
+                "Udenbys Alle 4", 
+                "9000", 
+                "55667788", 
+                Gender.Kvinde, 
+                new DateTime(2005, 7, 28), 
+                1
+            );
+            sanne.RunnerID = 4;
+            sanne.SetSubsidyGroup(2);
+
+            var mockRunners = new List<Runner> { sanne };
+            var repository = new MockRunnerRepository(mockRunners);
 
             // Act
             var runner = repository.GetById(4);
