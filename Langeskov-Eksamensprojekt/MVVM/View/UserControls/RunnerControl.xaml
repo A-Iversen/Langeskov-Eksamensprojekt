@@ -56,7 +56,8 @@
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
                          Text="{Binding PostalCode}"
-                         Margin="5,20,0,0" Width="60"/>
+                         Margin="5,20,0,0" Width="60"
+                         MaxLength="4"/>
                 </StackPanel>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Email"
@@ -69,7 +70,8 @@
                          Text="{Binding PhoneNumber}"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
-                         Width="185"/>
+                         Width="185"
+                         MaxLength="8"/>
 
                 <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="Løber Gruppe"
                           Margin="0,20,0,0" Width="auto"
