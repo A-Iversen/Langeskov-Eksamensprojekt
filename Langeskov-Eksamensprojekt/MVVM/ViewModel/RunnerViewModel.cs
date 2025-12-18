@@ -1,18 +1,20 @@
-using Infrastructure.Model;
-using Infrastructure.Abstraction;
+﻿using Infrastructure.Model;
+using Infrastructure.Repository;
 using MVVM.Core;
+using System;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using SubsidyGroupName = Infrastructure.Model.SubsidyGroup.SubsidyGroupName;
-using System.ComponentModel;
 
 
 namespace MVVM.ViewModel
@@ -209,110 +211,20 @@ namespace MVVM.ViewModel
         private readonly IRunnerRepository _repository;
         private readonly IRunnerGroupRepository? _runnerGroupRepository;
 
-        // Den valgte medlemskabstype fra UI - bruger nu integer ID i stedet for string navn
-        public int SelectedRunnerGroupID { get; set; }
-
         //Properties & ObservableCollection for dataindtastning (binder til View/UI)
-        private string _name = string.Empty;
-        public string Name
+        private RunnerValidationWrapper _newRunner;
+        public RunnerValidationWrapper NewRunner
         {
-            get => _name;
+            get => _newRunner;
             set
             {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
+                _newRunner = value;
+                OnPropertyChanged();
             }
         }
 
-        private string _email = string.Empty;
-        public string Email
-        {
-            get => _email;
-            set
-            {
-                if (_email != value)
-                {
-                    _email = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private DateTime _dateOfBirth;
-        public DateTime DateOfBirth
-        {
-            get => _dateOfBirth;
-            set
-            {
-                if (_dateOfBirth != value)
-                {
-                    _dateOfBirth = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private Gender? _gender;
-        public Gender? Gender
-        {
-            get => _gender;
-            set
-            {
-                if (_gender != value)
-                {
-                    _gender = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _address = string.Empty;
-        public string Address
-        {
-            get => _address;
-            set
-            {
-                if (_address != value)
-                {
-                    _address = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _postalCode = string.Empty;
-        public string PostalCode
-        {
-            get => _postalCode;
-            set
-            {
-                if (_postalCode != value)
-                {
-                    _postalCode = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private string _phoneNumber = string.Empty;
-        public string PhoneNumber
-        {
-            get => _phoneNumber;
-            set
-            {
-                if (_phoneNumber != value)
-                {
-                    _phoneNumber = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        private ObservableCollection<Runner> _runners { get; set; } = new ObservableCollection<Runner>();
-        public ObservableCollection<Runner> Runners
+        private ObservableCollection<RunnerValidationWrapper> _runners { get; set; } = new ObservableCollection<RunnerValidationWrapper>();
+        public ObservableCollection<RunnerValidationWrapper> Runners
         {
             get { return _runners; }
             set { _runners = value; }
@@ -328,43 +240,41 @@ namespace MVVM.ViewModel
         public IEnumerable<Gender> GenderOptions => Enum.GetValues(typeof(Gender)).Cast<Gender>();
 
 
+        private RunnerValidationWrapper _selectedRunner;
+        public RunnerValidationWrapper SelectedRunner
+        {
+            get { return _selectedRunner; }
+            set
+            {
+                _selectedRunner = value;
+                OnPropertyChanged();
+            }
+        }
+
         //Constructor
         public RunnerViewModel(IRunnerRepository repository, IRunnerGroupRepository? runnerGroupRepository = null)
         {
             _repository = repository;
             _runnerGroupRepository = runnerGroupRepository;
 
-            
-            CreateRunnerCommand = new RelayCommand(_ =>
-            {
-                try
-                {
-                    var runner = CreateNewRunner();
-                    Runners.Add(runner); // Optional: show in list
-                    MessageBox.Show($"Bruger '{runner.Name}' blev oprettet.", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Fejl: {ex.Message}", "Oprettelse mislykkedes", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            });
+            // Initializere wrapperen med en blank Runner model.
+            NewRunner = new RunnerValidationWrapper(new Runner());
 
             LoadRunners();
             LoadRunnerGroups();
         }
 
 
-        // Indlæs eksisterende medlemmer
+        // Indlæs eksisterende medlemmer fra databasen
         private void LoadRunners()
         {
             var runners = _repository.GetAll();
             _runners.Clear();
             foreach (var runner in runners)
             {
-                _runners.Add(runner);
+                _runners.Add(new RunnerValidationWrapper(runner));
             }
         }
-
         private void LoadRunnerGroups()
         {
             _runnerGroups.Clear();
@@ -404,46 +314,60 @@ namespace MVVM.ViewModel
         }
 
 
-        // Kommando til at oprette et nyt medlem
-        public ICommand CreateRunnerCommand { get; }
 
         //--Oprettelse af Runner---
-        public Runner CreateNewRunner()
+        public ICommand CreateRunnerCommand => new RelayCommand(execute => CreateRunner());
+        private void CreateRunner()
         {
-            if (string.IsNullOrWhiteSpace(Name) || DateOfBirth == default || SelectedRunnerGroupID <= 0)
+            // Validerings logik
+            if (string.IsNullOrWhiteSpace(NewRunner.Name) || NewRunner.DateOfBirth == default)
             {
-                throw new ArgumentException("Navn, fødselsdato og medlemskabstype skal udfyldes.");
+                MessageBox.Show("Udfyld venligst alle felter korrekt.", "Valideringsfejl");
+                return;
             }
 
-            if (_repository.RunnerExists(Name, DateOfBirth))
+            try
             {
-                throw new InvalidOperationException("Medlemmet findes allerede. Kontakt administrator for genaktivering.");
+                if (_repository.RunnerExists(NewRunner.Name, NewRunner.DateOfBirth))
+                {
+                    MessageBox.Show("Medlemmet findes allerede.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Oprettelse af ny Runner fra Wrapper
+                // Model attributen er af typen Runner så det er "stortset" det samme som en type: new Runner
+                var runnerModel = NewRunner.Model;
+
+                // Automatisk Gruppeberegning & Konvertering til database INT Primary Key.
+                var allocatedGroupEnum = CalculateSubsidyGroup(runnerModel.DateOfBirth);
+                runnerModel.SetSubsidyGroup((int)allocatedGroupEnum);
+
+                // Oprettelse i database
+                var createdRunner = _repository.Add(runnerModel);
+
+                //Tilføjelse til ObservableCollection for UI opdatering
+                Runners.Add(new RunnerValidationWrapper(createdRunner));
+
+                //Simulation af Bekræftelse/Mail
+                Console.WriteLine($"Bekræftelse sendt til {createdRunner.Email ?? "ingen email"}. Tildelt tilskudsgruppe ID: {createdRunner.SubsidyGroupID}");
+
+
+                //Laver et nyt Runner objekt som ville resette input felterne i UI
+                NewRunner = new RunnerValidationWrapper(new Runner());
             }
-
-            
-            var newRunner = new Runner(name: Name, email: Email, address: Address, postalCode: PostalCode, phoneNumber: PhoneNumber, gender: Gender, dateOfBirth: DateOfBirth, runnerGroupID: SelectedRunnerGroupID);
-
-            // Automatisk Gruppeberegning
-            var allocatedGroupEnum = CalculateSubsidyGroup(newRunner.DateOfBirth);
-
-            // Konvertering til database INT Primary Key.
-            var allocatedGroupID = (int)allocatedGroupEnum;
-            newRunner.SetSubsidyGroup(allocatedGroupID);
-
-            var createdRunner = _repository.Add(newRunner);
-
-            //Simulation af Bekræftelse/Mail
-            Console.WriteLine($"Bekræftelse sendt til {createdRunner.Email ?? "ingen email"}. Tildelt tilskudsgruppe ID: {createdRunner.SubsidyGroupID}");
-
-            return createdRunner;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Fejl: {ex.Message}", "Oprettelse mislykkedes", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-        
 
 
         //---Editing af Runner---
-        public ICommand UpdateRunnerCommand => new RelayCommand(param =>
+        public ICommand UpdateRunnerCommand => new RelayCommand(EditRunner);
+
+        private void EditRunner(object param)
         {
-            var runner = param as Runner ?? SelectedRunner;
+            var runner = param as RunnerValidationWrapper ?? SelectedRunner;
             if (runner == null)
             {
                 MessageBox.Show("Ingen løber valgt til opdatering.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -452,30 +376,19 @@ namespace MVVM.ViewModel
 
             try
             {
-                _repository.Update(runner);
+                _repository.Update(runner.Model);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Fejl ved opdatering: {ex.Message}", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        });
-
+        }
 
 
         //---Sletning af Runner---
-        private Runner? _selectedRunner;
-        public Runner? SelectedRunner
+        public ICommand DeleteRunnerCommand => new RelayCommand(execute => DeleteRunner());
+        private void DeleteRunner()
         {
-            get { return _selectedRunner; }
-            set
-            {
-                _selectedRunner = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ICommand DeleteRunnerCommand => new RelayCommand(execute =>
-        {          
             if (SelectedRunner == null)
             {
                 MessageBox.Show("Ingen løber valgt til sletning.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -483,14 +396,14 @@ namespace MVVM.ViewModel
             }
             try
             {
-                _repository.Delete(SelectedRunner.RunnerID);
+                _repository.Delete(SelectedRunner.Model.RunnerID);
                 Runners.Remove(SelectedRunner);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Fejl ved sletning: {ex.Message}", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        });
+        }
 
     }
 }

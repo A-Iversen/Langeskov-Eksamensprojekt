@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Model;
 
-namespace Infrastructure.Abstraction
+namespace Infrastructure.Repository
 {
     public interface IRunnerRepository : IRepository<Runner>
     {

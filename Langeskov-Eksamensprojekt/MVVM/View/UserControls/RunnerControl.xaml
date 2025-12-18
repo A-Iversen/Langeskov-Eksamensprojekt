@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MVVM.View.UserControls" xmlns:viewmodel="clr-namespace:MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RunnerViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="570" d:DesignWidth="1000">
+             d:DesignHeight="570" d:DesignWidth="1050">
     
     <UserControl.Resources>
         <CollectionViewSource x:Key="RunnerGroupsSource" 
@@ -35,14 +35,14 @@
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                     <TextBox Style="{StaticResource textBox}" Tag="Fulde Navn"
-                         Text="{Binding Name}"
+                         Text="{Binding NewRunner.Name, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,15,5,-5" Width="116"/>
 
                     <ComboBox Style="{StaticResource ComboBoxStyle1}" Tag="køn"
                               Margin="0,20,0,0" Width="64"
                               
                               ItemsSource="{Binding GenderOptions}"
-                              SelectedItem="{Binding Gender}"
+                              SelectedItem="{Binding NewRunner.Gender}"
                               SelectedIndex="-1">
     
                     </ComboBox>
@@ -51,23 +51,23 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBox Style="{StaticResource textBox}" Tag="Adresse"
-                         Text="{Binding Address}"
+                         Text="{Binding NewRunner.Address, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,20,0,0" Width="120"/>
 
                     <TextBox Style="{StaticResource textBox}" Tag="Post Nr."
-                         Text="{Binding PostalCode}"
-                         Margin="5,20,0,0" Width="60"
-                         MaxLength="4"/>
+                         Text="{Binding NewRunner.PostalCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}" 
+                         MaxLength="4"
+                         Margin="5,20,0,0" Width="60"/>
                 </StackPanel>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Email"
-                         Text="{Binding Email}"
+                         Text="{Binding NewRunner.Email, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}"
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"/>
 
                 <TextBox Style="{StaticResource textBox}" Tag="Telefon"
-                         Text="{Binding PhoneNumber}"
+                         Text="{Binding NewRunner.PhoneNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=False}" 
                          Margin="0,20,0,0"
                          HorizontalAlignment="Left"
                          Width="185"
@@ -80,7 +80,7 @@
           
                           DisplayMemberPath="RunnerGroupName" 
                           SelectedValuePath="RunnerGroupID"
-                          SelectedValue="{Binding SelectedRunnerGroupID, Mode=TwoWay}">
+                          SelectedValue="{Binding NewRunner.RunnerGroupID, Mode=TwoWay}">
                 </ComboBox>
 
                 <Calendar Style="{StaticResource CalendarStyle1}"
@@ -91,7 +91,7 @@
                           HorizontalAlignment="Left"
                           BorderThickness="1,1,1,2.3"
                           DisplayMode="Decade"
-                          SelectedDate="{Binding DateOfBirth, Mode=TwoWay}"
+                          SelectedDate="{Binding NewRunner.DateOfBirth, Mode=TwoWay}"
                           Tag="Fødselsdato"/>
 
 
@@ -159,11 +159,11 @@
                 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="ID" Binding="{Binding RunnerID, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <DataGridTextColumn Header="ID" Binding="{Binding RunnerID, Mode=OneWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
                                         MinWidth="42"
                                         IsReadOnly="True"/>
 
-                    <DataGridTextColumn Header="Navn" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                    <DataGridTextColumn Header="Navn" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}"
                                         MinWidth="115"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
@@ -173,26 +173,26 @@
                                             ElementStyle="{StaticResource DataGridComboBoxStyle}"                                            
                                             
                                             ItemsSource="{Binding Source={StaticResource GenderOptionsSource}}"
-                                            SelectedItemBinding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            SelectedItemBinding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                     </DataGridComboBoxColumn>
 
-                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Addresse" Binding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Post Nr." Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Telefon" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="72"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="125"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
-                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}', Mode=TwoWay, UpdateSourceTrigger=LostFocus}" 
+                    <DataGridTextColumn Header="Fødselsdato" Binding="{Binding DateOfBirth, StringFormat='{}{0:d}', Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True}" 
                                         MinWidth="95"
                                         EditingElementStyle="{StaticResource CellEditingStyle1}"/>
 
@@ -204,7 +204,7 @@
                                             ItemsSource="{Binding Source={StaticResource RunnerGroupsSource}}"
                                             DisplayMemberPath="RunnerGroupName"
                                             SelectedValuePath="RunnerGroupID"
-                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            SelectedValueBinding="{Binding RunnerGroupID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                     </DataGridComboBoxColumn>   
 
                 </DataGrid.Columns>

@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
-using System.Linq;
+﻿using Infrastructure.Repository;
 using Infrastructure.Model;
-using Infrastructure.Abstraction;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Repository
 {
     public class SQLRunnerGroupRepository : IRunnerGroupRepository
     {
@@ -15,92 +12,53 @@ namespace Infrastructure.Persistence
             _connectionString = connectionString;
         }
 
+        private static List<RunnerGroup> _groupData = new List<RunnerGroup>
+        {
+            new RunnerGroup(1, "Single", 159.00m),
+            new RunnerGroup(2, "SingleGratis", 0.00m),
+            new RunnerGroup(3, "Family", 350.00m),
+            new RunnerGroup(4, "FamilyGratis", 0.00m)
+        };
+
         public IEnumerable<RunnerGroup> GetAll()
         {
-            var runnerGroups = new List<RunnerGroup>();
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sql = "SELECT RunnerGroupID, RunnerGroupName, SubscriptionFee FROM RunnerGroup";
-                SqlCommand command = new SqlCommand(sql, connection);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    runnerGroups.Add(new RunnerGroup(
-                        reader.GetInt32(0),
-                        reader.GetString(1),
-                        reader.GetDecimal(2)
-                    ));
-                }
-                connection.Close();
-            }
-            return runnerGroups;
+            // SQL: SELECT * FROM RUNNERGROUP
+            return _groupData;
         }
 
         public RunnerGroup? GetById(int id)
         {
-            RunnerGroup? runnerGroup = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                string sql = "SELECT RunnerGroupID, RunnerGroupName, SubscriptionFee FROM RunnerGroup WHERE RunnerGroupID = @RunnerGroupID";
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@RunnerGroupID", id);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    runnerGroup = new RunnerGroup(
-                        reader.GetInt32(0),
-                        reader.GetString(1),
-                        reader.GetDecimal(2)
-                    );
-                }
-                connection.Close();
-            }
-            return runnerGroup;
+            // SQL: SELECT * FROM RUNNERGROUP WHERE RunnerGroupID = @ID
+            return _groupData.FirstOrDefault(g => g.RunnerGroupID == id);
         }
 
         public RunnerGroup Add(RunnerGroup entity)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            // SQL: INSERT INTO RUNNERGROUP (RunnerGroupName, SubscriptionFee) VALUES (@Name, @Fee); SELECT SCOPE_IDENTITY();
+            if (!_groupData.Any(g => g.RunnerGroupID == entity.RunnerGroupID))
             {
-                string sql = "INSERT INTO RunnerGroup (RunnerGroupName, SubscriptionFee) VALUES (@RunnerGroupName, @SubscriptionFee); SELECT SCOPE_IDENTITY();";
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@RunnerGroupName", entity.RunnerGroupName);
-                command.Parameters.AddWithValue("@SubscriptionFee", entity.SubscriptionFee);
-                connection.Open();
-                int newId = Convert.ToInt32(command.ExecuteScalar());
-                entity.RunnerGroupID = newId;
-                connection.Close();
+                _groupData.Add(entity);
             }
             return entity;
         }
 
         public void Update(RunnerGroup entity)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            // SQL: UPDATE RUNNERGROUP SET SubscriptionFee = @Fee, RunnerGroupName = @Name WHERE RunnerGroupID = @ID
+            var existing = _groupData.FirstOrDefault(g => g.RunnerGroupID == entity.RunnerGroupID);
+            if (existing != null)
             {
-                string sql = "UPDATE RunnerGroup SET RunnerGroupName = @RunnerGroupName, SubscriptionFee = @SubscriptionFee WHERE RunnerGroupID = @RunnerGroupID";
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@RunnerGroupName", entity.RunnerGroupName);
-                command.Parameters.AddWithValue("@SubscriptionFee", entity.SubscriptionFee);
-                command.Parameters.AddWithValue("@RunnerGroupID", entity.RunnerGroupID);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+                existing.SubscriptionFee = entity.SubscriptionFee;
+                existing.RunnerGroupName = entity.RunnerGroupName;
             }
         }
-
         public void Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            // SQL: DELETE FROM RUNNERGROUP WHERE RunnerGroupID = @ID
+            var groupToRemove = _groupData.FirstOrDefault(g => g.RunnerGroupID == id);
+            if (groupToRemove != null)
             {
-                string sql = "DELETE FROM RunnerGroup WHERE RunnerGroupID = @RunnerGroupID";
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.Parameters.AddWithValue("@RunnerGroupID", id);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+                _groupData.Remove(groupToRemove);
             }
         }
     }

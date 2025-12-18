@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using MVVM.ViewModel;
-using Infrastructure.Abstraction;
+using Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Infrastructure.Persistence;
 
@@ -25,7 +25,7 @@ namespace MVVM.View.UserControls
 
             // Initialize repositories with the connection string (or mock data for SubsidyGroupRepository)
             IRunnerRepository runnerRepository = new SQLRunnerRepository(connectionString);
-            ISubsidyGroupRepository subsidyGroupRepository = new SQLSubsidyGroupRepository(connectionString);
+            ISubsidyGroupRepository subsidyGroupRepository = new SQLSubsidyGroupRepository(); // Using mock data for now
             IRunnerGroupRepository runnerGroupRepository = new SQLRunnerGroupRepository(connectionString);
             
             // Set the DataContext to an instance of AccountingViewModel, injecting the required repositories

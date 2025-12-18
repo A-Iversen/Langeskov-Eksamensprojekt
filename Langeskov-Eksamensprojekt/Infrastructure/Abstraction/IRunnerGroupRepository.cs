@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.Model;
 
-namespace Infrastructure.Abstraction
+namespace Infrastructure.Repository
 {
     public interface IRunnerGroupRepository : IRepository<RunnerGroup>
     {
