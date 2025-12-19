@@ -312,15 +312,21 @@ namespace MVVM.ViewModel
             string[] kertemindePostalCodes = { "5300", "5550", "5380", "5390" /* ... tilføj flere */ };
             return kertemindePostalCodes.Contains(postalCode);
         }
-
-
+        
 
         //--Oprettelse af Runner---
         public ICommand CreateRunnerCommand => new RelayCommand(execute => CreateRunner());
         private void CreateRunner()
         {
             // Validerings logik
-            if (string.IsNullOrWhiteSpace(NewRunner.Name) || NewRunner.DateOfBirth == default)
+            if (string.IsNullOrWhiteSpace(NewRunner.Name) ||
+                string.IsNullOrWhiteSpace(NewRunner.Email) ||
+                string.IsNullOrWhiteSpace(NewRunner.Address) ||
+                string.IsNullOrWhiteSpace(NewRunner.PostalCode) ||
+                NewRunner.PostalCode.Length != 4 ||
+                string.IsNullOrWhiteSpace(NewRunner.PhoneNumber) ||
+                NewRunner.PhoneNumber.Length != 8 ||
+                NewRunner.DateOfBirth == default)
             {
                 MessageBox.Show("Udfyld venligst alle felter korrekt.", "Valideringsfejl");
                 return;
