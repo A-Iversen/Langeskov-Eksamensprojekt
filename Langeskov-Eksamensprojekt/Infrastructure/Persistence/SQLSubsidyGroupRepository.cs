@@ -1,75 +1,107 @@
-using Infrastructure.Model;
-using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.Model;
+using Infrastructure.Abstraction;
+using Microsoft.Data.SqlClient;
 
 namespace Infrastructure.Persistence
 {
-    // Represents a SQL-based repository for managing SubsidyGroup entities.
-    // This implementation currently uses an in-memory list as a mock data source.
     public class SQLSubsidyGroupRepository : ISubsidyGroupRepository
     {
-        private readonly string? _connectionString;
+        private readonly string _connectionString;
 
-        // Initializes a new instance of the SQLSubsidyGroupRepository class with a connection string.
         public SQLSubsidyGroupRepository(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        // Initializes a new instance of the SQLSubsidyGroupRepository class without a connection string.
-        // This constructor is used when the repository operates on an in-memory mock data source.
-        public SQLSubsidyGroupRepository()
-        {
-            
-        }
-
-        // In-memory mock data source for SubsidyGroups
-        private static readonly List<SubsidyGroup> _subsidyGroups = new List<SubsidyGroup>
-        {
-            new SubsidyGroup(1, "Barn (0-12 år)", "0-12"),
-            new SubsidyGroup(2, "Ung (13-18 år)", "13-18"),
-            new SubsidyGroup(3, "Ung Voksen (19-24 år)", "19-24"),
-            new SubsidyGroup(4, "Voksen (25-59 år)", "25-59"),
-            new SubsidyGroup(5, "Senior (60+ år)", "60+")
-        };
-
         public IEnumerable<SubsidyGroup> GetAll()
         {
-            return _subsidyGroups;
+            var subsidyGroups = new List<SubsidyGroup>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT SubsidyGroupID, SubsidyGroupNameText, AgeRange FROM SubsidyGroup";
+                SqlCommand command = new SqlCommand(sql, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    subsidyGroups.Add(new SubsidyGroup(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetString(2)
+                    ));
+                }
+                connection.Close();
+            }
+            return subsidyGroups;
         }
 
         public SubsidyGroup? GetById(int id)
         {
-            return _subsidyGroups.FirstOrDefault(s => s.SubsidyGroupID == id);
+            SubsidyGroup? subsidyGroup = null;
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string sql = "SELECT SubsidyGroupID, SubsidyGroupNameText, AgeRange FROM SubsidyGroup WHERE SubsidyGroupID = @SubsidyGroupID";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@SubsidyGroupID", id);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    subsidyGroup = new SubsidyGroup(
+                        reader.GetInt32(0),
+                        reader.GetString(1),
+                        reader.GetString(2)
+                    );
+                }
+                connection.Close();
+            }
+            return subsidyGroup;
         }
 
         public SubsidyGroup Add(SubsidyGroup entity)
         {
-            // This is a mock implementation. In a real scenario, you would insert into a database.
-            int newId = _subsidyGroups.Max(s => s.SubsidyGroupID) + 1;
-            entity.SubsidyGroupID = newId;
-            _subsidyGroups.Add(entity);
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                string sql = "INSERT INTO SubsidyGroup (SubsidyGroupNameText, AgeRange) VALUES (@SubsidyGroupNameText, @AgeRange); SELECT SCOPE_IDENTITY();";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@SubsidyGroupNameText", entity.SubsidyGroupNameText);
+                command.Parameters.AddWithValue("@AgeRange", entity.AgeRange);
+                connection.Open();
+                int newId = Convert.ToInt32(command.ExecuteScalar());
+                entity.SubsidyGroupID = newId;
+                connection.Close();
+            }
             return entity;
         }
 
         public void Update(SubsidyGroup entity)
         {
-            var existing = _subsidyGroups.FirstOrDefault(s => s.SubsidyGroupID == entity.SubsidyGroupID);
-            if (existing != null)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                existing.SubsidyGroupNameText = entity.SubsidyGroupNameText;
-                existing.AgeRange = entity.AgeRange;
+                string sql = "UPDATE SubsidyGroup SET SubsidyGroupNameText = @SubsidyGroupNameText, AgeRange = @AgeRange WHERE SubsidyGroupID = @SubsidyGroupID";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@SubsidyGroupNameText", entity.SubsidyGroupNameText);
+                command.Parameters.AddWithValue("@AgeRange", entity.AgeRange);
+                command.Parameters.AddWithValue("@SubsidyGroupID", entity.SubsidyGroupID);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
 
         public void Delete(int id)
         {
-            var toRemove = _subsidyGroups.FirstOrDefault(s => s.SubsidyGroupID == id);
-            if (toRemove != null)
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                _subsidyGroups.Remove(toRemove);
+                string sql = "DELETE FROM SubsidyGroup WHERE SubsidyGroupID = @SubsidyGroupID";
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@SubsidyGroupID", id);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
     }
