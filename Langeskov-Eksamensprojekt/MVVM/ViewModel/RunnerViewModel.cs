@@ -1,5 +1,6 @@
-﻿using Infrastructure.Model;
-using Infrastructure.Repository;
+﻿using Infrastructure.Abstraction;
+using Infrastructure.Model;
+using Infrastructure.Persistence;
 using MVVM.Core;
 using System;
 using System;

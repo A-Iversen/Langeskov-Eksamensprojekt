@@ -1,5 +1,5 @@
 ﻿using Infrastructure.Model;
-using Infrastructure.Repository;
+using Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using MVVM.ViewModel;
 using System;
