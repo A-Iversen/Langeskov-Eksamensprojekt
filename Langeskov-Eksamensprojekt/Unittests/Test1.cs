@@ -12,24 +12,6 @@ namespace Unittests
     [TestClass]
     public sealed class Test1
     {
-        private static IConfiguration _configuration;
-        private static string _connectionString;
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
-        {
-            var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-            _configuration = configurationBuilder.Build();
-            _connectionString = _configuration.GetConnectionString("DefaultConnection");
-
-            // Initialize the database once for the test class.
-            DatabaseInitializer.Initialize(_connectionString);
-        }
-
-
         [TestMethod]
         public void Runner_Constructor_SetsProperties()
         {

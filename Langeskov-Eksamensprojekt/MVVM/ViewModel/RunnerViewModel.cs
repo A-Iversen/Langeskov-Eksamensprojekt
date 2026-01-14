@@ -45,8 +45,6 @@ namespace MVVM.ViewModel
                 }
             }
         }
-
-
         public string Name
         {
             get => Model.Name;
@@ -59,7 +57,6 @@ namespace MVVM.ViewModel
                 }
             }
         }
-
         public string? Email
         {
             get => Model.Email;
@@ -72,7 +69,6 @@ namespace MVVM.ViewModel
                 }
             }
         }
-
         public string? PostalCode
         {
             get => Model.PostalCode;

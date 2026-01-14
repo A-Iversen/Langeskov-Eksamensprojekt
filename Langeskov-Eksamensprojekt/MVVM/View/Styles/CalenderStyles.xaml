@@ -152,7 +152,6 @@
                                         </Grid>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="Content" Value="2020-2029">
-                                                <!--<Setter TargetName="buttonContent" Property="Content" Value="Fødselsdato"/>-->
                                                 <Setter TargetName="Label" Property="Opacity" Value="100"/>
                                             </Trigger>
                                             

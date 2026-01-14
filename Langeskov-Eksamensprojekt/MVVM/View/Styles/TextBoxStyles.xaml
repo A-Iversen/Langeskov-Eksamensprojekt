@@ -18,7 +18,7 @@
 
                         <Border Background="{StaticResource bgDark}" Grid.ColumnSpan="2" CornerRadius="15"/>
 
-                        <Label x:Name="tbLabel" Content="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=TextBox}}"
+                        <Label Name="tbLabel" Content="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=TextBox}}"
                                VerticalAlignment="Center" Margin="5,0,0,0"  Visibility="Collapsed"
                                Foreground="{StaticResource textMuted}"
                                FontStyle="Italic" FontSize="{TemplateBinding FontSize}"/>
